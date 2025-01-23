@@ -2,6 +2,34 @@ html::-webkit-scrollbar {
     width: 0;
 }
 
+.filter-container {
+    display: flex;
+    gap: 1rem;
+    margin: 20px 0;
+}
+
+.filter-container select {
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    min-width: 200px;
+    cursor: pointer;
+}
+
+.filter-container select:focus {
+    outline: none;
+    border-color: #4E4EF2;
+}
+
+#mainHeading {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #1e1c23;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
 p {
     display: block;
     margin-block-start: 1em;

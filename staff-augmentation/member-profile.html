@@ -5,9 +5,20 @@
 <head>
 	<link rel="stylesheet" href="style.css">
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+	<title id="pageTitle">Top Freelancers</title>
 </head>
 <div style="width: 90%; position: relative; margin: auto;">
-	<!--copy below this to wordpress-->
+	<div class="filter-container">
+		<select id="roleFilter">
+			<option value="all">All Top Freelancers</option>
+			<option value="developer">Top Developers</option>
+			<option value="developer-au">Top Developers in Australia</option>
+		</select>
+		<select id="countryFilter">
+			<option value="all">All Countries</option>
+		</select>
+	</div>
+	<h1 id="mainHeading">Top Freelancers</h1>
 	<div id="loader"></div>
 
 	<script>
@@ -77,9 +88,49 @@
 					});
 			}
 
-			const renderData = function() {
+			function updateURLAndTitle(role, country) {
+				let title = '';
+				if (role === 'developer-au') {
+					title = 'Top Developers in Australia';
+					country = 'Australia'; // Force country filter to Australia
+					document.getElementById('countryFilter').value = 'Australia';
+					document.getElementById('countryFilter').disabled = true;
+				} else {
+					document.getElementById('countryFilter').disabled = false;
+					title = role === 'all' ? 'Top Freelancers' : `Top ${role.charAt(0).toUpperCase() + role.slice(1)}s`;
+					if (country !== 'all') {
+						title += ` in ${country}`;
+					}
+				}
+				
+				// Update URL
+				const url = new URL(window.location);
+				url.searchParams.set('role', role);
+				url.searchParams.set('country', country);
+				window.history.replaceState({}, '', url);
+				
+				// Update title and heading
+				document.title = title;
+				document.getElementById('mainHeading').textContent = title;
+				document.getElementById('pageTitle').textContent = title;
+
+				// Update country dropdown if needed
+				if (role === 'developer-au') {
+					document.getElementById('countryFilter').value = 'Australia';
+				}
+			}
+
+			const renderData = function(roleFilter = 'all', countryFilter = 'all') {
 				// clear container
 				container.innerHTML = '';
+				
+				// Handle special case for Australian developers
+				if (roleFilter === 'developer-au') {
+					roleFilter = 'developer';
+					countryFilter = 'Australia';
+				}
+				
+				updateURLAndTitle(roleFilter, countryFilter);
 
 				data.forEach(x => {
 					const profile = header.reduce((acc, curr, index) => {
@@ -88,6 +139,12 @@
 					}, {});
 
 					if (!profile[Name]) return;
+
+					// Skip if country doesn't match filter
+					if (countryFilter !== 'all' && profile[Country] !== countryFilter) return;
+					
+					// Skip if role doesn't match filter (assuming Title contains role information)
+					if (roleFilter !== 'all' && !profile[Title].toLowerCase().includes(roleFilter.toLowerCase())) return;
 
 					const projectList = projectData.filter(data => data[Member] === profile[Name]);
 					const listProject = projectList.map(project => (`
@@ -244,7 +301,55 @@
 					contactButton.addEventListener('click', onClickContactButton);
 				});
 			}
-			renderData();
+
+			// Initialize filters from URL
+			const urlParams = new URLSearchParams(window.location.search);
+			const initialRole = urlParams.get('role') || 'all';
+			const initialCountry = urlParams.get('country') || 'all';
+
+			// Populate country dropdown with unique countries
+			const uniqueCountries = [...new Set(data.map(x => {
+				const profile = header.reduce((acc, curr, index) => {
+					acc[curr] = x[index];
+					return acc;
+				}, {});
+				return profile[Country];
+			}).filter(Boolean))].sort();
+
+			const countryFilter = document.getElementById('countryFilter');
+			uniqueCountries.forEach(country => {
+				const option = document.createElement('option');
+				option.value = country;
+				option.textContent = country;
+				option.selected = country === initialCountry;
+				countryFilter.appendChild(option);
+			});
+
+			// Set initial role filter value
+			document.getElementById('roleFilter').value = initialRole;
+
+			// Add event listeners to filters
+			document.getElementById('roleFilter').addEventListener('change', (e) => {
+				const role = e.target.value;
+				const country = role === 'developer-au' ? 'Australia' : document.getElementById('countryFilter').value;
+				renderData(role, country);
+			});
+
+			countryFilter.addEventListener('change', (e) => {
+				const country = e.target.value;
+				const role = document.getElementById('roleFilter').value;
+				renderData(role, country);
+			});
+
+			// Initial render with URL params
+			renderData(initialRole, initialCountry);
+
+			// Modify initial render to handle the special case
+			if (initialRole === 'developer-au') {
+				document.getElementById('countryFilter').value = 'Australia';
+				document.getElementById('countryFilter').disabled = true;
+			}
+
 			const screenQuery = window.matchMedia("(max-width: 1024px) and (orientation: portrait)");
 			screenQuery.addEventListener('change', renderData);
 		})();
