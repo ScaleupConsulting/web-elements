@@ -1,195 +1,313 @@
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap');
+  @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap");
 </style>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <head>
-	<link rel="stylesheet" href="style.css">
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-	<title id="pageTitle">Top Freelancers</title>
+  <link rel="stylesheet" href="style.css" />
+  <script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <title id="pageTitle">Top Freelancers</title>
 </head>
-<div style="width: 90%; position: relative; margin: auto;">
-	<div class="filter-container">
-		<select id="roleFilter">
-			<option value="all">All Top Freelancers</option>
-			<option value="developer">Top Developers</option>
-			<option value="developer-au">Top Developers in Australia</option>
-		</select>
-		<select id="countryFilter">
-			<option value="all">All Countries</option>
-		</select>
-	</div>
-	<h1 id="mainHeading">Top Freelancers</h1>
-	<div id="loader"></div>
+<div style="width: 90%; position: relative; margin: auto">
+  <div class="filter-container">
+    <select id="roleFilter">
+      <option value="all">All Top Freelancers</option>
+      <option value="developer">Top Developers</option>
+      <option value="developer-au">Top Developers in Australia</option>
+    </select>
+    <select id="countryFilter">
+      <option value="all">All Countries</option>
+    </select>
+  </div>
+  <h1 id="mainHeading">Top Freelancers</h1>
+  <div id="loader"></div>
 
-	<script>
-		(async () => {
-			const [json, projectJson] = await Promise.all([
-				fetch('https://sheets.googleapis.com/v4/spreadsheets/1EeU849RAahYBTPXC85WFuHkJLa0JhwwgTBrJbS3c7kw/values/profiles?alt=json&key=AIzaSyAssRDe2nf-mYoaHRQb88Rk-Hmgtn_GrnE'),
-				fetch('https://sheets.googleapis.com/v4/spreadsheets/1EeU849RAahYBTPXC85WFuHkJLa0JhwwgTBrJbS3c7kw/values/projects?alt=json&key=AIzaSyAssRDe2nf-mYoaHRQb88Rk-Hmgtn_GrnE')
-			])
-			.then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
-			.then(([json, projectJson]) => {
-				document.getElementById('loader').style.display = 'none';
-				return [json, projectJson];
-			});
-			const [header, ...data] = json.values;
+  <script>
+    (async () => {
+      const [json, projectJson] = await Promise.all([
+        fetch(
+          "https://sheets.googleapis.com/v4/spreadsheets/1EeU849RAahYBTPXC85WFuHkJLa0JhwwgTBrJbS3c7kw/values/profiles?alt=json&key=AIzaSyAssRDe2nf-mYoaHRQb88Rk-Hmgtn_GrnE"
+        ),
+        fetch(
+          "https://sheets.googleapis.com/v4/spreadsheets/1EeU849RAahYBTPXC85WFuHkJLa0JhwwgTBrJbS3c7kw/values/projects?alt=json&key=AIzaSyAssRDe2nf-mYoaHRQb88Rk-Hmgtn_GrnE"
+        ),
+      ])
+        .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
+        .then(([json, projectJson]) => {
+          document.getElementById("loader").style.display = "none";
+          return [json, projectJson];
+        });
+      const [header, ...data] = json.values;
 
-			const [projectHeader, ...projectRawData] = projectJson.values;
+      const [projectHeader, ...projectRawData] = projectJson.values;
 
-			/* Project columns name*/
-			const Member = "Member Name";
-			const ProjectName = "Project Name";
-			const Logo = "Upload your project logo";
-			const Link = "Project URL"
-			/* Project columns name*/
+      /* Project columns name*/
+      const Member = "Member Name";
+      const ProjectName = "Project Name";
+      const Logo = "Upload your project logo";
+      const Link = "Project URL";
+      /* Project columns name*/
 
-			/* Profile columns name*/
-			const Name = "Name:";
-			const Avatar = "Upload Your Image:";
-			const Country = "Country:";
-			const Title = "Headline (Profile Title):";
-			const Review = "Review (max length 320 characters):";
-			const Skills = "Preferred Technology:";
-			const Rate = "Rate/Hour (AUD):";
-			const Availability = "Availability ( per week):";
-			const Experience = "Experience (only in number of years):";
-			const JobSuccess = "JobSuccess";
-			const Linkedin = "LinkedIn Profile:";
-			const Codementor = "Codementor Profile:";
-			const Upwork = "Upwork Profile:";
-			const Toptal = "Toptal Profile:";
-			const RisingTalent = "RisingTalent";
-			const TopRated = "TopRated";
-			const TopRatedPlus = "TopRatedPlus";
-			const ExpertVetted = "ExpertVetted";
-			/* Profile columns name*/
+      /* Profile columns name*/
+      const Name = "Name:";
+      const Avatar = "Upload Your Image:";
+      const Country = "Country:";
+      const Title = "Headline (Profile Title):";
+      const Review = "Review (max length 320 characters):";
+      const Skills = "Preferred Technology:";
+      const Rate = "Rate/Hour (AUD):";
+      const Availability = "Availability ( per week):";
+      const Experience = "Experience (only in number of years):";
+      const JobSuccess = "JobSuccess";
+      const Linkedin = "LinkedIn Profile:";
+      const Codementor = "Codementor Profile:";
+      const Upwork = "Upwork Profile:";
+      const Toptal = "Toptal Profile:";
+      const RisingTalent = "RisingTalent";
+      const TopRated = "TopRated";
+      const TopRatedPlus = "TopRatedPlus";
+      const ExpertVetted = "ExpertVetted";
+      /* Profile columns name*/
 
-			const projectData = projectRawData.map(data => (
-				data.reduce((acc, curr, index) => {
-					acc[projectHeader[index]] = curr;
-					return acc;
-				}, {})
-			));
+      const projectData = projectRawData.map((data) =>
+        data.reduce((acc, curr, index) => {
+          acc[projectHeader[index]] = curr;
+          return acc;
+        }, {})
+      );
 
-			const contries = await fetch('https://flagicons.lipis.dev/country.json').then(res => res.json());
+      const contries = await fetch(
+        "https://flagicons.lipis.dev/country.json"
+      ).then((res) => res.json());
 
-			const container = document.querySelector('.staff-profiles');
+      const container = document.querySelector(".staff-profiles");
 
-			window.onSubmitForm = function (e) {
-				e.preventDefault();
-				const service_id = 'service_me3fj46';
-				const template_id = 'template_gehkc1j';
-				const user_id = 'AxzgF3774nXj7bELh';
-				emailjs.sendForm(service_id, template_id, '#contact-form', user_id)
-					.then(function (response) {
-						window.open('https://www.scaleupconsulting.com.au/thank-you/', '_self')
-					}, function (error) {
-						console.log('FAILED...', error);
-					});
-			}
+      window.onSubmitForm = function (e) {
+        e.preventDefault();
+        const service_id = "service_me3fj46";
+        const template_id = "template_gehkc1j";
+        const user_id = "AxzgF3774nXj7bELh";
+        emailjs
+          .sendForm(service_id, template_id, "#contact-form", user_id)
+          .then(
+            function (response) {
+              window.open(
+                "https://www.scaleupconsulting.com.au/thank-you/",
+                "_self"
+              );
+            },
+            function (error) {
+              console.log("FAILED...", error);
+            }
+          );
+      };
 
-			function updateURLAndTitle(role, country) {
-				let title = '';
-				if (role === 'developer-au') {
-					title = 'Top Developers in Australia';
-					country = 'Australia'; // Force country filter to Australia
-					document.getElementById('countryFilter').value = 'Australia';
-					document.getElementById('countryFilter').disabled = true;
-				} else {
-					document.getElementById('countryFilter').disabled = false;
-					title = role === 'all' ? 'Top Freelancers' : `Top ${role.charAt(0).toUpperCase() + role.slice(1)}s`;
-					if (country !== 'all') {
-						title += ` in ${country}`;
-					}
-				}
-				
-				// Update URL
-				const url = new URL(window.location);
-				url.searchParams.set('role', role);
-				url.searchParams.set('country', country);
-				window.history.replaceState({}, '', url);
-				
-				// Update title and heading
-				document.title = title;
-				document.getElementById('mainHeading').textContent = title;
-				document.getElementById('pageTitle').textContent = title;
+      function getPageConfig() {
+        const path = window.location.pathname.toLowerCase();
+        // Remove trailing slash if present
+        const cleanPath = path.endsWith('/') ? path.slice(0, -1) : path;
+        
+        const pageConfigs = {
+            '/top-developers-in-australia': {
+                role: 'developer-au',
+                country: 'Australia',
+                title: 'Top Developers in Australia',
+                disableCountryFilter: true
+            },
+            '/top-developers': {
+                role: 'developer',
+                country: 'all',
+                title: 'Top Developers',
+                disableCountryFilter: false
+            },
+            '/top-freelancers': {
+                role: 'all',
+                country: 'all',
+                title: 'Top Freelancers',
+                disableCountryFilter: false
+            }
+        };
 
-				// Update country dropdown if needed
-				if (role === 'developer-au') {
-					document.getElementById('countryFilter').value = 'Australia';
-				}
-			}
+        const config = pageConfigs[cleanPath];
+        console.log('Current path:', cleanPath, 'Config:', config); // Debug log
+        return config || pageConfigs['/top-freelancers'];
+    }
 
-			const renderData = function(roleFilter = 'all', countryFilter = 'all') {
-				// clear container
-				container.innerHTML = '';
-				
-				// Handle special case for Australian developers
-				if (roleFilter === 'developer-au') {
-					roleFilter = 'developer';
-					countryFilter = 'Australia';
-				}
-				
-				updateURLAndTitle(roleFilter, countryFilter);
+      function updatePageState(role, country) {
+        let path;
+        let title;
 
-				data.forEach(x => {
-					const profile = header.reduce((acc, curr, index) => {
-						acc[curr] = x[index];
-						return acc;
-					}, {});
+        if (role === 'developer') {
+            if (country === 'all') {
+                path = '/top-developers';
+                title = 'Top Developers';
+            } else {
+                path = `/top-developers-in-${country.toLowerCase()}`;
+                title = `Top Developers in ${country}`;
+            }
+        } else {
+            if (country === 'all') {
+                path = '/top-freelancers';
+                title = 'Top Freelancers';
+            } else {
+                path = `/top-freelancers-in-${country.toLowerCase()}`;
+                title = `Top Freelancers in ${country}`;
+            }
+        }
 
-					if (!profile[Name]) return;
+        // Update URL and title
+        window.history.replaceState({}, title, path);
+        document.title = title;
+        document.getElementById('mainHeading').textContent = title;
+        document.getElementById('pageTitle').textContent = title;
+    }
 
-					// Skip if country doesn't match filter
-					if (countryFilter !== 'all' && profile[Country] !== countryFilter) return;
-					
-					// Skip if role doesn't match filter (assuming Title contains role information)
-					if (roleFilter !== 'all' && !profile[Title].toLowerCase().includes(roleFilter.toLowerCase())) return;
+      function updateFilters(role, country, disableCountryFilter = false) {
+        document.getElementById("roleFilter").value = role;
+        document.getElementById("countryFilter").value = country;
+        document.getElementById("countryFilter").disabled =
+          disableCountryFilter;
+      }
 
-					const projectList = projectData.filter(data => data[Member] === profile[Name]);
-					const listProject = projectList.map(project => (`
+      const renderData = function (roleFilter = "all", countryFilter = "all") {
+        container.innerHTML = "";
+        
+        // Handle special case for Australian developers
+        if (roleFilter === 'developer-au') {
+            roleFilter = 'developer'; // Convert developer-au to developer for profile filtering
+            countryFilter = 'Australia';
+        }
+        
+        updatePageState(roleFilter, countryFilter);
+
+        data.forEach((x) => {
+          const profile = header.reduce((acc, curr, index) => {
+            acc[curr] = x[index];
+            return acc;
+          }, {});
+
+          if (!profile[Name]) return;
+
+          // Skip if country doesn't match filter
+          if (countryFilter !== "all" && profile[Country] !== countryFilter)
+            return;
+
+          // Modify role filtering to look for "developer" in the title
+          if (roleFilter === "developer" && !profile[Title].toLowerCase().includes("developer")) return;
+          if (roleFilter !== "all" && roleFilter !== "developer") return;
+
+          const projectList = projectData.filter(
+            (data) => data[Member] === profile[Name]
+          );
+          const listProject = projectList
+            .map(
+              (project) => `
 					<div class="project-box">
-						<a id="anchor${project[ProjectName]}" ${project[Link] ? `href=${project[Link]}` : ''} target="_blank">
-							<img class="project-logo" src=${project[Logo].replace('open', 'thumbnail')} alt="${project[ProjectName]}">
+						<a id="anchor${project[ProjectName]}" ${
+                project[Link] ? `href=${project[Link]}` : ""
+              } target="_blank">
+							<img class="project-logo" src=${project[Logo].replace(
+                "open",
+                "thumbnail"
+              )} alt="${project[ProjectName]}">
 						</a>
 					</div>
-				`)).join('');
-					//https://flagicons.lipis.dev/
-					const country = contries.find(country => country.name.toLowerCase() === profile[Country].toLowerCase());
-					const countryFlag = country ? `https://flagicons.lipis.dev/${country.flag_4x3}` : '';
-					
-					// portrait mobile view
-					if (window.matchMedia("(max-width: 1080px) and (orientation: portrait)").matches) {
-						container.insertAdjacentHTML('afterbegin',
-							`<div class="main-box">
+				`
+            )
+            .join("");
+          //https://flagicons.lipis.dev/
+          const country = contries.find(
+            (country) =>
+              country.name.toLowerCase() === profile[Country].toLowerCase()
+          );
+          const countryFlag = country
+            ? `https://flagicons.lipis.dev/${country.flag_4x3}`
+            : "";
+
+          // portrait mobile view
+          if (
+            window.matchMedia("(max-width: 1080px) and (orientation: portrait)")
+              .matches
+          ) {
+            container.insertAdjacentHTML(
+              "afterbegin",
+              `<div class="main-box">
 							<div>
 								<div class="box1">
-									<img class="staff-images" src=${profile[Avatar] && profile[Avatar].replace('open', 'thumbnail')} alt="${profile[Name]}">
+									<img class="staff-images" src=${
+                    profile[Avatar] &&
+                    profile[Avatar].replace("open", "thumbnail")
+                  } alt="${profile[Name]}">
 									<div>
-										<div class="innerbox1"> ${profile[Name]} <img class="flag" src=${countryFlag} alt="${profile[Country]}" > </div>
+										<div class="innerbox1"> ${
+                      profile[Name]
+                    } <img class="flag" src=${countryFlag} alt="${
+                profile[Country]
+              }" > </div>
 										<div class="rate"> $${profile[Rate]}/hr </div>
 									</div>
 								</div> 
-								${profile[JobSuccess] ? `<div class="job-success"> ${profile[JobSuccess]} job success </div>` : ""}
+								${
+                  profile[JobSuccess]
+                    ? `<div class="job-success"> ${profile[JobSuccess]} job success </div>`
+                    : ""
+                }
 								<hr > 
 								<div class="box2">
 									<div>
-										${profile[RisingTalent] === "TRUE" ? `<div class="rated"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><polygon fill="#1caf9d" points="7 0 0 0 0 9.21 7 14 14 9.21 14 0 7 0"></polygon></svg>   Rising Talent </div>` : ''}	
-										${profile[TopRated] === "TRUE" ? `<div class="rated"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><polygon fill="#5aa2c6" points="6.98 0 0 0 0 9.21 6.98 14 13.95 9.21 13.95 0 6.98 0"></polygon><polygon fill="#0b83b2" points="0.05 9.21 7.02 14 14 9.21 14 0 0.05 9.21"></polygon></svg>   Top rated </div>` : ''}
-										${profile[TopRatedPlus] === "TRUE" ? `<div class="rated"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><polygon fill="#f86d9c" points="6.98 0 0 0 0 9.21 6.98 14 13.95 9.21 13.95 0 6.98 0"></polygon><polygon fill="#fba0bd" points="0 0 14 9.21 14 0 0 0"></polygon><polygon fill="#f1367a" points="0.05 9.21 7.02 14 14 9.21 14 0 0.05 9.21"></polygon></svg>   Top rated plus </div>` : ''}
-										${profile[ExpertVetted] === "TRUE" ? `<div class="rated"><img src="https://assets-global.website-files.com/603fea6471d9d8559d077603/6253fdd311f245fe594c9788_badge-vetted-talent.png"/>   Expert vetted </div>` : ''}
+										${
+                      profile[RisingTalent] === "TRUE"
+                        ? `<div class="rated"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><polygon fill="#1caf9d" points="7 0 0 0 0 9.21 7 14 14 9.21 14 0 7 0"></polygon></svg>   Rising Talent </div>`
+                        : ""
+                    }	
+										${
+                      profile[TopRated] === "TRUE"
+                        ? `<div class="rated"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><polygon fill="#5aa2c6" points="6.98 0 0 0 0 9.21 6.98 14 13.95 9.21 13.95 0 6.98 0"></polygon><polygon fill="#0b83b2" points="0.05 9.21 7.02 14 14 9.21 14 0 0.05 9.21"></polygon></svg>   Top rated </div>`
+                        : ""
+                    }
+										${
+                      profile[TopRatedPlus] === "TRUE"
+                        ? `<div class="rated"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><polygon fill="#f86d9c" points="6.98 0 0 0 0 9.21 6.98 14 13.95 9.21 13.95 0 6.98 0"></polygon><polygon fill="#fba0bd" points="0 0 14 9.21 14 0 0 0"></polygon><polygon fill="#f1367a" points="0.05 9.21 7.02 14 14 9.21 14 0 0.05 9.21"></polygon></svg>   Top rated plus </div>`
+                        : ""
+                    }
+										${
+                      profile[ExpertVetted] === "TRUE"
+                        ? `<div class="rated"><img src="https://assets-global.website-files.com/603fea6471d9d8559d077603/6253fdd311f245fe594c9788_badge-vetted-talent.png"/>   Expert vetted </div>`
+                        : ""
+                    }
 									</div>
 									
 									<div class="professional-links">
-									${profile[Linkedin] ? `<a href="${profile[Linkedin]}" target="_blank"> <img class="profile-icon" src="https://web-elements.scaleupconsulting.com.au/staff-augmentation/images/profile/linkedin.png" alt="linkedin"> </a>` : ""}
-										${profile[Codementor] ? `<a href="${profile[Codementor]}" target="_blank"> <img class="profile-icon" src="https://web-elements.scaleupconsulting.com.au/staff-augmentation/images/profile/codementor.png" alt="codementor"> </a>` : ""}
-										${profile[Upwork] ? `<a href="${profile[Upwork]}" target="_blank"> <img class="profile-icon" src="https://web-elements.scaleupconsulting.com.au/staff-augmentation/images/profile/upwork.webp" alt="upwork"> </a>` : ""}
-										${profile[Toptal] ? `<a href="${profile[Toptal]}" target="_blank"> <img class="profile-icon" src="https://web-elements.scaleupconsulting.com.au/staff-augmentation/images/profile/toptal.png" alt="toptal"> </a>` : ""}
+									${
+                    profile[Linkedin]
+                      ? `<a href="${profile[Linkedin]}" target="_blank"> <img class="profile-icon" src="https://web-elements.scaleupconsulting.com.au/staff-augmentation/images/profile/linkedin.png" alt="linkedin"> </a>`
+                      : ""
+                  }
+										${
+                      profile[Codementor]
+                        ? `<a href="${profile[Codementor]}" target="_blank"> <img class="profile-icon" src="https://web-elements.scaleupconsulting.com.au/staff-augmentation/images/profile/codementor.png" alt="codementor"> </a>`
+                        : ""
+                    }
+										${
+                      profile[Upwork]
+                        ? `<a href="${profile[Upwork]}" target="_blank"> <img class="profile-icon" src="https://web-elements.scaleupconsulting.com.au/staff-augmentation/images/profile/upwork.webp" alt="upwork"> </a>`
+                        : ""
+                    }
+										${
+                      profile[Toptal]
+                        ? `<a href="${profile[Toptal]}" target="_blank"> <img class="profile-icon" src="https://web-elements.scaleupconsulting.com.au/staff-augmentation/images/profile/toptal.png" alt="toptal"> </a>`
+                        : ""
+                    }
 									</div>
 								</div>
 
 								<div>
-									<div class="experience"> <span class="years" data-years="${profile[Experience]}+"></span> <span>${profile[Experience]} years exp. </span></div>
+									<div class="experience"> <span class="years" data-years="${
+                    profile[Experience]
+                  }+"></span> <span>${
+                profile[Experience]
+              } years exp. </span></div>
 									<div class="availability"> Availability: ${profile[Availability]} </div>
 								</div>
 
@@ -205,11 +323,14 @@
 								</div>
 
 								<div class="qualification-boxes">
-									${profile[Skills].split(',').map(skill => (
-								`<div class="qualification-box">
+									${profile[Skills].split(",")
+                    .map(
+                      (skill) =>
+                        `<div class="qualification-box">
 													<p>${skill}</p>
 												</div>`
-							)).join('')}
+                    )
+                    .join("")}
 								</div>
 							</div>
 							<div class="contact-modal ${profile[Name]}">
@@ -227,15 +348,22 @@
 								</div>
 							</div>
 						</div>`
-						)
-					}
-					else {
-						container.insertAdjacentHTML('afterbegin',
-							`<div class="main-box">
+            );
+          } else {
+            container.insertAdjacentHTML(
+              "afterbegin",
+              `<div class="main-box">
 						<div>
 							<div class="box1">
-								<div class="innerbox1"> ${profile[Name]} <img class="flag" src=${countryFlag} alt="${profile[Country]}" > </div>
-								<img class="staff-images" src=${profile[Avatar] && profile[Avatar].replace('open', 'thumbnail')} alt="${profile[Name]}">
+								<div class="innerbox1"> ${
+                  profile[Name]
+                } <img class="flag" src=${countryFlag} alt="${
+                profile[Country]
+              }" > </div>
+								<img class="staff-images" src=${
+                  profile[Avatar] &&
+                  profile[Avatar].replace("open", "thumbnail")
+                } alt="${profile[Name]}">
 								<br>
 								<button class="contact-btn ${profile[Name]}"> Contact ${profile[Name]} </button>
 							</div> 
@@ -252,26 +380,63 @@
 								<div class="past-project"> Preferred Technology </div>
 
 								<div class="qualification-boxes">
-									${profile[Skills].split(',').map(skill => (
-								`<div class="qualification-box">
+									${profile[Skills].split(",")
+                    .map(
+                      (skill) =>
+                        `<div class="qualification-box">
 											<p>${skill}</p>
 										</div>`
-							)).join('')}
+                    )
+                    .join("")}
 								</div>
 							</div>
 
 							<div class="box3">
 								<div class="rate"> Rate: $${profile[Rate]}/hr </div>
-								${profile[RisingTalent] === "TRUE" ? `<div class="rated"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><polygon fill="#1caf9d" points="7 0 0 0 0 9.21 7 14 14 9.21 14 0 7 0"></polygon></svg>   Rising Talent </div>` : ''}	
-								${profile[TopRated] === "TRUE" ? `<div class="rated"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><polygon fill="#5aa2c6" points="6.98 0 0 0 0 9.21 6.98 14 13.95 9.21 13.95 0 6.98 0"></polygon><polygon fill="#0b83b2" points="0.05 9.21 7.02 14 14 9.21 14 0 0.05 9.21"></polygon></svg>   Top rated </div>` : ''}
-								${profile[TopRatedPlus] === "TRUE" ? `<div class="rated"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><polygon fill="#f86d9c" points="6.98 0 0 0 0 9.21 6.98 14 13.95 9.21 13.95 0 6.98 0"></polygon><polygon fill="#fba0bd" points="0 0 14 9.21 14 0 0 0"></polygon><polygon fill="#f1367a" points="0.05 9.21 7.02 14 14 9.21 14 0 0.05 9.21"></polygon></svg>   Top rated plus </div>` : ''}
-								${profile[ExpertVetted] === "TRUE" ? `<div class="rated"><img src="https://assets-global.website-files.com/603fea6471d9d8559d077603/6253fdd311f245fe594c9788_badge-vetted-talent.png"/>   Expert vetted </div>` : ''}
-								<div class="experience"> <span class="years" data-years="${profile[Experience]}+"> ${profile[Experience]}</span> years experience </div>
+								${
+                  profile[RisingTalent] === "TRUE"
+                    ? `<div class="rated"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><polygon fill="#1caf9d" points="7 0 0 0 0 9.21 7 14 14 9.21 14 0 7 0"></polygon></svg>   Rising Talent </div>`
+                    : ""
+                }	
+								${
+                  profile[TopRated] === "TRUE"
+                    ? `<div class="rated"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><polygon fill="#5aa2c6" points="6.98 0 0 0 0 9.21 6.98 14 13.95 9.21 13.95 0 6.98 0"></polygon><polygon fill="#0b83b2" points="0.05 9.21 7.02 14 14 9.21 14 0 0.05 9.21"></polygon></svg>   Top rated </div>`
+                    : ""
+                }
+								${
+                  profile[TopRatedPlus] === "TRUE"
+                    ? `<div class="rated"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-name="Layer 1" viewBox="0 0 14 14" role="img"><polygon fill="#f86d9c" points="6.98 0 0 0 0 9.21 6.98 14 13.95 9.21 13.95 0 6.98 0"></polygon><polygon fill="#fba0bd" points="0 0 14 9.21 14 0 0 0"></polygon><polygon fill="#f1367a" points="0.05 9.21 7.02 14 14 9.21 14 0 0.05 9.21"></polygon></svg>   Top rated plus </div>`
+                    : ""
+                }
+								${
+                  profile[ExpertVetted] === "TRUE"
+                    ? `<div class="rated"><img src="https://assets-global.website-files.com/603fea6471d9d8559d077603/6253fdd311f245fe594c9788_badge-vetted-talent.png"/>   Expert vetted </div>`
+                    : ""
+                }
+								<div class="experience"> <span class="years" data-years="${
+                  profile[Experience]
+                }+"> ${profile[Experience]}</span> years experience </div>
 								<div class="professional-links">
-									${profile[Linkedin] ? `<a href="${profile[Linkedin]}" target="_blank"> <img class="profile-icon" src="https://web-elements.scaleupconsulting.com.au/staff-augmentation/images/profile/linkedin.png" alt="linkedin"> </a>` : ""}
-									${profile[Codementor] ? `<a href="${profile[Codementor]}" target="_blank"> <img class="profile-icon" src="https://web-elements.scaleupconsulting.com.au/staff-augmentation/images/profile/codementor.png" alt="codementor"> </a>` : ""}
-									${profile[Upwork] ? `<a href="${profile[Upwork]}" target="_blank"> <img class="profile-icon" src="https://web-elements.scaleupconsulting.com.au/staff-augmentation/images/profile/upwork.webp" alt="upwork"> </a>` : ""}
-									${profile[Toptal] ? `<a href="${profile[Toptal]}" target="_blank"> <img class="profile-icon" src="https://web-elements.scaleupconsulting.com.au/staff-augmentation/images/profile/toptal.png" alt="toptal"> </a>` : ""}
+									${
+                    profile[Linkedin]
+                      ? `<a href="${profile[Linkedin]}" target="_blank"> <img class="profile-icon" src="https://web-elements.scaleupconsulting.com.au/staff-augmentation/images/profile/linkedin.png" alt="linkedin"> </a>`
+                      : ""
+                  }
+									${
+                    profile[Codementor]
+                      ? `<a href="${profile[Codementor]}" target="_blank"> <img class="profile-icon" src="https://web-elements.scaleupconsulting.com.au/staff-augmentation/images/profile/codementor.png" alt="codementor"> </a>`
+                      : ""
+                  }
+									${
+                    profile[Upwork]
+                      ? `<a href="${profile[Upwork]}" target="_blank"> <img class="profile-icon" src="https://web-elements.scaleupconsulting.com.au/staff-augmentation/images/profile/upwork.webp" alt="upwork"> </a>`
+                      : ""
+                  }
+									${
+                    profile[Toptal]
+                      ? `<a href="${profile[Toptal]}" target="_blank"> <img class="profile-icon" src="https://web-elements.scaleupconsulting.com.au/staff-augmentation/images/profile/toptal.png" alt="toptal"> </a>`
+                      : ""
+                  }
 								</div>
 							</div>
 						</div>
@@ -290,71 +455,121 @@
 							</div>
 						</div>
 					</div>`
-						);
-					}
+            );
+          }
 
-					var contactButton = document.querySelector(`.contact-btn.${profile[Name].replaceAll(' ', '.')}`);
-					const onClickContactButton = function () {
-						const contactModal = document.querySelector(`.contact-modal.${profile[Name].replaceAll(' ', '.')}`);
-						contactModal.style.display = contactModal.style.display == 'block' ? 'none' : 'block';
-					}
-					contactButton.addEventListener('click', onClickContactButton);
-				});
-			}
+          var contactButton = document.querySelector(
+            `.contact-btn.${profile[Name].replaceAll(" ", ".")}`
+          );
+          const onClickContactButton = function () {
+            const contactModal = document.querySelector(
+              `.contact-modal.${profile[Name].replaceAll(" ", ".")}`
+            );
+            contactModal.style.display =
+              contactModal.style.display == "block" ? "none" : "block";
+          };
+          contactButton.addEventListener("click", onClickContactButton);
+        });
+      };
 
-			// Initialize filters from URL
-			const urlParams = new URLSearchParams(window.location.search);
-			const initialRole = urlParams.get('role') || 'all';
-			const initialCountry = urlParams.get('country') || 'all';
+      // Initialize filters from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const initialRole = urlParams.get("role") || "all";
+      const initialCountry = urlParams.get("country") || "all";
 
-			// Populate country dropdown with unique countries
-			const uniqueCountries = [...new Set(data.map(x => {
-				const profile = header.reduce((acc, curr, index) => {
-					acc[curr] = x[index];
-					return acc;
-				}, {});
-				return profile[Country];
-			}).filter(Boolean))].sort();
+      // Populate country dropdown with unique countries
+      const uniqueCountries = [
+        ...new Set(
+          data
+            .map((x) => {
+              const profile = header.reduce((acc, curr, index) => {
+                acc[curr] = x[index];
+                return acc;
+              }, {});
+              return profile[Country];
+            })
+            .filter(Boolean)
+        ),
+      ].sort();
 
-			const countryFilter = document.getElementById('countryFilter');
-			uniqueCountries.forEach(country => {
-				const option = document.createElement('option');
-				option.value = country;
-				option.textContent = country;
-				option.selected = country === initialCountry;
-				countryFilter.appendChild(option);
-			});
+      const countryFilter = document.getElementById("countryFilter");
+      uniqueCountries.forEach((country) => {
+        const option = document.createElement("option");
+        option.value = country;
+        option.textContent = country;
+        option.selected = country === initialCountry;
+        countryFilter.appendChild(option);
+      });
 
-			// Set initial role filter value
-			document.getElementById('roleFilter').value = initialRole;
+      // Set initial role filter value
+      document.getElementById("roleFilter").value = initialRole;
 
-			// Add event listeners to filters
-			document.getElementById('roleFilter').addEventListener('change', (e) => {
-				const role = e.target.value;
-				const country = role === 'developer-au' ? 'Australia' : document.getElementById('countryFilter').value;
-				renderData(role, country);
-			});
+      // Add event listeners to filters
+      document.getElementById("roleFilter").addEventListener("change", (e) => {
+        const role = e.target.value;
+        let country;
+            
+        if (role === 'developer-au') {
+            country = 'Australia';
+        } else if (role === 'developer') {
+            country = document.getElementById('countryFilter').value;
+        } else {
+            // If switching from developer-au to all, reset country
+            country = 'all';
+        }
+        
+        updateFilters(role, country);
+        renderData(role, country);
+      });
 
-			countryFilter.addEventListener('change', (e) => {
-				const country = e.target.value;
-				const role = document.getElementById('roleFilter').value;
-				renderData(role, country);
-			});
+      countryFilter.addEventListener("change", (e) => {
+        const country = e.target.value;
+        const role = document.getElementById("roleFilter").value;
+        
+        if (role === 'developer' && country === 'Australia') {
+            // If selecting Australia while in developer mode, switch to developer-au
+            updateFilters('developer-au', 'Australia');
+            renderData('developer-au', 'Australia');
+        } else {
+            renderData(role, country);
+        }
+      });
 
-			// Initial render with URL params
-			renderData(initialRole, initialCountry);
+      // Initial render with URL params
+      renderData(initialRole, initialCountry);
 
-			// Modify initial render to handle the special case
-			if (initialRole === 'developer-au') {
-				document.getElementById('countryFilter').value = 'Australia';
-				document.getElementById('countryFilter').disabled = true;
-			}
+      const screenQuery = window.matchMedia(
+        "(max-width: 1024px) and (orientation: portrait)"
+      );
+      screenQuery.addEventListener("change", renderData);
 
-			const screenQuery = window.matchMedia("(max-width: 1024px) and (orientation: portrait)");
-			screenQuery.addEventListener('change', renderData);
-		})();
-	</script>
+      // Initialize page based on URL path
+      const pageConfig = getPageConfig();
+      updateFilters(
+        pageConfig.role,
+        pageConfig.country,
+        pageConfig.disableCountryFilter
+      );
 
-	<div class="staff-profiles"></div>
+      // Modify event listeners
+      document.getElementById("roleFilter").addEventListener("change", (e) => {
+        const role = e.target.value;
+        const country = document.getElementById("countryFilter").value;
+        renderData(role, country);
+      });
 
+      document
+        .getElementById("countryFilter")
+        .addEventListener("change", (e) => {
+          const country = e.target.value;
+          const role = document.getElementById("roleFilter").value;
+          renderData(role, country);
+        });
+
+      // Initial render with path-based config
+      renderData(pageConfig.role, pageConfig.country);
+    })();
+  </script>
+
+  <div class="staff-profiles"></div>
 </div>

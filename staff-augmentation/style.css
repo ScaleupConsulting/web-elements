@@ -6,6 +6,8 @@ html::-webkit-scrollbar {
     display: flex;
     gap: 1rem;
     margin: 20px 0;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .filter-container select {
@@ -19,6 +21,21 @@ html::-webkit-scrollbar {
 }
 
 .filter-container select:focus {
+    outline: none;
+    border-color: #4E4EF2;
+}
+
+#sortFilter {
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    min-width: 200px;
+    cursor: pointer;
+}
+
+#sortFilter:focus {
     outline: none;
     border-color: #4E4EF2;
 }
