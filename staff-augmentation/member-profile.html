@@ -105,7 +105,7 @@
 
       function getPageConfig() {
         const path = window.location.pathname.toLowerCase();
-        // Remove trailing slash if present
+        // Remove trailing slash if present for comparison
         const cleanPath = path.endsWith('/') ? path.slice(0, -1) : path;
         
         const pageConfigs = {
@@ -140,18 +140,18 @@
 
         if (role === 'developer') {
             if (country === 'all') {
-                path = '/top-developers';
+                path = '/top-developers/';  // Added trailing slash
                 title = 'Top Developers';
             } else {
-                path = `/top-developers-in-${country.toLowerCase()}`;
+                path = `/top-developers-in-${country.toLowerCase()}/`;  // Added trailing slash
                 title = `Top Developers in ${country}`;
             }
         } else {
             if (country === 'all') {
-                path = '/top-freelancers';
+                path = '/top-freelancers/';  // Added trailing slash
                 title = 'Top Freelancers';
             } else {
-                path = `/top-freelancers-in-${country.toLowerCase()}`;
+                path = `/top-freelancers-in-${country.toLowerCase()}/`;  // Added trailing slash
                 title = `Top Freelancers in ${country}`;
             }
         }
@@ -472,10 +472,15 @@
         });
       };
 
-      // Initialize filters from URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const initialRole = urlParams.get("role") || "all";
-      const initialCountry = urlParams.get("country") || "all";
+      // Initialize page based on URL path
+      const pageConfig = getPageConfig();
+      const initialRole = pageConfig.role;
+      const initialCountry = pageConfig.country;
+
+      // Add this function to count profiles by country
+      function getCountryCount(profiles, country) {
+        return profiles.filter(profile => profile[Country] === country).length;
+      }
 
       // Populate country dropdown with unique countries
       const uniqueCountries = [
@@ -493,12 +498,21 @@
       ].sort();
 
       const countryFilter = document.getElementById("countryFilter");
+      // Clear existing options except "All Countries"
+      countryFilter.innerHTML = '<option value="all">All Countries</option>';
+      
+      // Add countries with counts
       uniqueCountries.forEach((country) => {
-        const option = document.createElement("option");
-        option.value = country;
-        option.textContent = country;
-        option.selected = country === initialCountry;
-        countryFilter.appendChild(option);
+          const count = getCountryCount(data.map(x => header.reduce((acc, curr, index) => {
+              acc[curr] = x[index];
+              return acc;
+          }, {})), country);
+          
+          const option = document.createElement("option");
+          option.value = country;
+          option.textContent = `${country} (${count})`;
+          option.selected = country === initialCountry;
+          countryFilter.appendChild(option);
       });
 
       // Set initial role filter value
@@ -543,8 +557,6 @@
       );
       screenQuery.addEventListener("change", renderData);
 
-      // Initialize page based on URL path
-      const pageConfig = getPageConfig();
       updateFilters(
         pageConfig.role,
         pageConfig.country,
