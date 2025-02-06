@@ -54,6 +54,7 @@
       const Avatar = "Upload Your Image:";
       const Country = "Country:";
       const Title = "Headline (Profile Title):";
+      const Role = "Role:"; // Add Role field
       const Review = "Review (max length 320 characters):";
       const Skills = "Preferred Technology:";
       const Rate = "Rate/Hour (AUD):";
@@ -193,8 +194,9 @@
           if (countryFilter !== "all" && profile[Country] !== countryFilter)
             return;
 
-          // Modify role filtering to look for "developer" in the title
-          if (roleFilter === "developer" && !profile[Title].toLowerCase().includes("developer")) return;
+          // Check Role field instead of Title for developer filtering
+          if (roleFilter === "developer" && 
+              (!profile[Role] || !profile[Role].toLowerCase().includes('developer'))) return;
           if (roleFilter !== "all" && roleFilter !== "developer") return;
 
           const projectList = projectData.filter(
