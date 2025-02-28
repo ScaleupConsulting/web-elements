@@ -1,568 +1,589 @@
 <style>
-  /* override hover effect on unclickable rows */
-  table.sharetribe-pricing-table
-    tbody
-    tr:nth-child(2n + 1):not([data-show-more-row]):hover
-    > td {
-    background-color: hsla(0, 0%, 50.2%, 0.0705882353);
-  }
-  table.sharetribe-pricing-table tbody tr:not([data-show-more-row]):hover > td {
-    background: none;
-  }
-  /* apply hover effect to clickable row */
-  table.sharetribe-pricing-table tbody tr[data-show-more-row]:hover::after {
-    opacity: 0;
-  }
+    /* override hover effect on unclickable rows */
+    table.sharetribe-pricing-table
+      tbody
+      tr:nth-child(2n + 1):not([data-show-more-row]):hover
+      > td {
+      background-color: hsla(0, 0%, 50.2%, 0.0705882353);
+    }
+    table.sharetribe-pricing-table tbody tr:not([data-show-more-row]):hover > td {
+      background: none;
+    }
+    /* apply hover effect to clickable row */
+    table.sharetribe-pricing-table tbody tr[data-show-more-row]:hover::after {
+      opacity: 0;
+    }
+  
+    .sharetribe-table-heading{
+    font-family: 'Poppins', sans-serif; /* Specifies the font family */
+    font-size: 40px; /* Specifies the font size */
+    margin-bottom: 10px; /* Adjust the bottom margin of the heading */
+    font-weight: 500;
+    }
 
-  .sharetribe-table-heading{
-  font-family: 'Poppins', sans-serif; /* Specifies the font family */
-  font-size: 40px; /* Specifies the font size */
-  margin-bottom: 10px; /* Adjust the bottom margin of the heading */
-  font-weight: 500;
-  }
-
-  .sharetribe-pricing-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    font-family: "Source Sans Pro", sans-serif; /* Set font to Source Sans Pro */
-    font-size: 18px; /* Set font size to 16px \*/
-  }
-
-  .blue-link {
-    /*color: blue;
-    /* You can also specify other styles such as text-decoration, font-weight, etc. 
-    text-decoration: underline; /* Adds an underline to the link */
-  }
-
-  .sharetribe-pricing-table td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: left;
-  }
-
-  /* Right-align data in the price column (Column 3) */
-  .sharetribe-pricing-table td:nth-child(2) {
-    text-align: right;
-    width: 180px; /* Adjust the width of the price column */
-  }
-
-  .sharetribe-price-name {
-    font-weight: 600;
-  }
-
-  .sharetribe-pricing-table tr[data-show-more-row] {
-    position: relative;
-  }
-
-  .sharetribe-pricing-table tr[data-show-more-row]::after {
-    content: "show more";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    mask: linear-gradient(0deg, white 1em, transparent);
-    height: 100%;
-    display: flex;
-    align-items: end;
-    justify-content: center;
-    transition: all 200ms ease-in-out;   
-    backdrop-filter: blur(99px);
-    opacity: 0;
-  }
-
-  .sharetribe-pricing-table
-    tr[data-show-more-row][data-show-more-active]::after {
-    opacity: 1;
-  }
-
-  .sharetribe-pricing-table tr[data-show-more-row] ~ tr td {
-    line-height: 1.4;
-    opacity: 1;
-    transition: all 200ms ease-in-out;
-  }
-
-  .sharetribe-pricing-table
-    tr[data-show-more-row][data-show-more-active]
-    ~ tr
-    td {
-    line-height: 0;
-    padding: 0;
-    border: 0;
-    opacity: 0;
-  }
-
-  @media (max-width: 900px) {
     .sharetribe-pricing-table {
-      margin: 0; /* Remove margins for smaller screens */
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-family: "Source Sans Pro", sans-serif; /* Set font to Source Sans Pro */
+      font-size: 18px; /* Set font size to 16px \*/
     }
-
+  
+    .blue-link {
+      /*color: blue;
+      /* You can also specify other styles such as text-decoration, font-weight, etc. 
+      text-decoration: underline; /* Adds an underline to the link */
+    }
+  
     .sharetribe-pricing-table td {
-      padding: 6px; /* Reduce cell padding for smaller screens */
-      font-size: 13px; /* Reduce font size for smaller screens */
-      width: 70%; /* Allow cells to expand to fit content */
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
     }
+  
+    /* Right-align data in the price column (Column 3) */
     .sharetribe-pricing-table td:nth-child(2) {
       text-align: right;
-      width: 30%; /* Adjust the width of the price column \*/
+      width: 180px; /* Adjust the width of the price column */
     }
-  }
-</style>
-
-<table class="sharetribe-pricing-table">
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Site Setup</span><br />
-      Requires 3rd-party hosting. Amazon web services is recommended.
-    </td>
-    <td>$ 0</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Top Bar Links</span><br />
-      For example, links to pre-filtered search results or special pages.
-    </td>
-    <td>$ 49</td>
-  </tr>
   
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Autocomplete input for listing fields</span> <br />
-      For text fields with a large, finite set of values.  For example, vehicle models.
-    </td>
-    <td>$ 89</td>
-  </tr>      
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Transparent Pricing</span><br />
-      Sellers enter the price they receive. Buyers still see the price they will
-      pay. Marketplace commission appears on the buyer's side.
-    </td>
-    <td>$ 99</td>
-  </tr>
+    .sharetribe-price-name {
+      font-weight: 600;
+    }
   
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Conditional listing fields</span> <br />
-      For example, if "category" is a listing field and only one category has a "subcategory" listing field
-    </td>
-    <td>$ 150</td>
-  </tr>
+    .sharetribe-pricing-table tr[data-show-more-row] {
+      position: relative;
+    }
   
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Prepopulate listing field value with user profile value</span> <br />
-      May require custom user profile fields
-    </td>
-    <td>$ 150</td>
-  </tr>
-
-  <tr data-show-more-row data-show-more-active>
-    <td>
-      <span class="sharetribe-price-name">Custom Email Trigger & Content</span
-      ><br />
-      For example, a buyer adds an image during checkout to be given to the
-      provider.
-    </td>
-    <td>$ 160</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Whole Prices</span><br />
-      Disallowing sellers from entering prices with cents/pence.
-    </td>
-    <td>$ 160</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">3rd Party Social Login & SSO</span
-      ><br />
-      For example, Google and Facebook.
-    </td>
-    <td>$ 160</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name"
-        >Pulling listings From Shopify, Magento, or Other E-commerce
-        Platforms</span
-      >
-      <br />
-      Requires administrative access to E-commerce platform. Price is quoted per
-      platform. Variants are pulled as separate listings. Includes pulling stock
-      levels regularly.
-    </td>
-    <td>$ 199</td>
-  </tr>
+    .sharetribe-pricing-table tr[data-show-more-row]::after {
+      content: "show more";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      mask: linear-gradient(0deg, white 1em, transparent);
+      height: 100%;
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      transition: all 200ms ease-in-out;   
+      backdrop-filter: blur(99px);
+      opacity: 0;
+    }
   
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Autocomplete search filters</span> <br />
-      For text fields with a large, finite set of values.  For example, vehicle models.
-    </td>
-    <td>$ 199</td>
-  </tr>
+    .sharetribe-pricing-table
+      tr[data-show-more-row][data-show-more-active]::after {
+      opacity: 1;
+    }
   
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Favourites</span> <br />
-      
-    </td>
-    <td>$ 250</td>
-  </tr>
+    .sharetribe-pricing-table tr[data-show-more-row] ~ tr td {
+      line-height: 1.4;
+      opacity: 1;
+      transition: all 200ms ease-in-out;
+    }
   
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Customised listing previews</span> <br />
-      For example, showing the listing date and location
-    </td>
-    <td>$ 250</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">My Order Pages</span><br />
-      Similar to the Inbox pages, but filtered to only show orders.
-    </td>
-    <td>$ 299</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Cookie Consent</span><br />
-    </td>
-    <td>$ 299</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Multi-language</span><br />
-      For example, users can switch between English and Chinese. Marketplace
-      operator provides the translations.
-    </td>
-    <td>$ 299</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Distance search filter</span> <br />
-      Direct distance only
-    </td>
-    <td>$ 299</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Automatically expiring listings</span> <br />
-      
-    </td>
-    <td>$ 299</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Arrange listing photos</span> <br />
-      The default Sharetribe web template uses the upload order as the photo order
-    </td>
-    <td>$ 299</td>
-  </tr>
+    .sharetribe-pricing-table
+      tr[data-show-more-row][data-show-more-active]
+      ~ tr
+      td {
+      line-height: 0;
+      padding: 0;
+      border: 0;
+      opacity: 0;
+    }
   
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Custom User Profile Fields</span
-      ><br />
-      These could be fields similar to listing fields (checkboxes, dropdown,
-      text, numbers, etc.) and displayed on users' profile pages.
-    </td>
-    <td>$ 399</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Variable Booking Durations</span
-      ><br />
-      For example, some 30-minute lessons and some 60-minute lessons.
-    </td>
-    <td>$ 399</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">CRM Integration</span><br />
-      Triggers can be when a user, listing, or transaction is created.
-    </td>
-    <td>$ 399</td>
-  </tr>
+    @media (max-width: 900px) {
+      .sharetribe-pricing-table {
+        margin: 0; /* Remove margins for smaller screens */
+      }
   
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Realtime messaging and conversations not tied to listings</span> <br />
-      
-    </td>
-    <td>$ 399</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Variable Shipping Costs</span><br />
-      Requires account with
-      <a href="https://goshippo.com/" target="_blank" class="blue-link"
-        >Shippo.</a
-      >
-    </td>
-    <td>$ 499</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Provider Sales Analytics</span><br />
-      Providers can see charts on their dashboard.
-    </td>
-    <td>$ 499</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Calculate Distance </span
-      ><br />Direct, walking, or driving distance/times can be displayed for
-      each listing based on search location.
-    </td>
-    <td>$ 499</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Multi-currency </span><br />For
-      example, some listings are priced in AUD and some listings in NZD.
-    </td>
-    <td>$ 499</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Referral System</span><br />Upon a
-      successful referral, referrer receives discounts not cash payouts.
-    </td>
-    <td>$ 499</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Price Negotiation</span><br />Buyer
-      initiates a conversation and provider can adjust offer price for that
-      transaction.
-    </td>
-    <td>$ 499</td>
-  </tr>
+      .sharetribe-pricing-table td {
+        padding: 6px; /* Reduce cell padding for smaller screens */
+        font-size: 13px; /* Reduce font size for smaller screens */
+        width: 70%; /* Allow cells to expand to fit content */
+      }
+      .sharetribe-pricing-table td:nth-child(2) {
+        text-align: right;
+        width: 30%; /* Adjust the width of the price column \*/
+      }
+    }
+  </style>
   
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">User Profile Pic on Maps</span
-      ><br />Show user profile pic on maps instead of price
-    </td>
-    <td>$ 599</td>
-  </tr>
+  <table class="sharetribe-pricing-table">
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Site Setup</span><br />
+        Requires 3rd-party hosting. Amazon web services is recommended.
+      </td>
+      <td>Included</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">
+            <a 
+            href="https://www.scaleupconsulting.com.au/sharetribe-mobile-app/"
+            target="_blank"
+            class="blue-link">
+                Mobile App
+            </a>
+            </span><br />Our approach ensures your mobile and web apps stay in real-time sync.
+      </td>
+      <td><a 
+            href="https://www.scaleupconsulting.com.au/sharetribe-mobile-app/"
+            target="_blank"
+            class="blue-link">Limited Time Offer<br /> USD 150/mo</a></td>
+    </tr>
     
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Add-ons to listings</span><br />For
-      example, cleaning fee.
-    </td>
-    <td>$ 599</td>
-  </tr>
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Autocomplete input for listing fields</span> <br />
+        For text fields with a large, finite set of values.  For example, vehicle models.
+      </td>
+      <td>$ 89</td>
+    </tr>      
 
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Discounts for Longer Bookings</span
-      ><br />For example, custom prices for weekly bookings
-    </td>
-    <td>$ 599</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Dropoff and Pickup Pricing</span
-      ><br />For rental bookings
-    </td>
-    <td>$ 599</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Deposit for Booking</span><br />Where
-      possible, we recommend implementing this as a card authorisation instead
-      of a refund as card authorisations may be time-limited.
-    </td>
-    <td>$ 599</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Mobile App</span><br />Similar to
-      <a
-        href="https://median.co/pricing#self-service"
-        target="_blank"
-        class="blue-link"
-      >
-        Median,</a
-      >
-      the web app is wrapped in a mobile app so it is available in stores for
-      download and stays in sync with the web app.
-    </td>
-    <td>$ 599</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Discount Vouchers</span><br />Provider
-      can choose a percentage or amount-based discount. Discounts can have an
-      expiration date. Discounts are per-listing.
-    </td>
-    <td>$ 599</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Auctions or Bidding</span><br />Buyer
-      enters their maximum bid. At the end of the auction period, the winning
-      bidder is contacted to checkout and provide their card details.
-    </td>
-    <td>$ 699</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Matchmaking Algorithm</span
-      ><br />Allowing buyers to answer some questions before showing them
-      recommended listings.
-    </td>
-    <td>$ 699</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">User Subscription Fees</span><br />For
-      example, buyers can search/browse only after paying a subscription, or
-      providers can list in a category only after paying a subscription.
-    </td>
-    <td>$ 699</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">2-Factor Authentication</span
-      ><br />
-    </td>
-    <td>$ 699</td>
-  </tr>
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Clear Pricing</span><br />
+        Sellers enter the price they receive. Buyers still see the price they will
+        pay. Marketplace commission appears on the buyer's side.
+      </td>
+      <td>$ 99</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Prepopulate listing field value with user profile value</span> <br />
+      </td>
+      <td>$ 150</td>
+    </tr>
   
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Comments on listings</span> <br />
+    <tr >
+      <td>
+        <span class="sharetribe-price-name">Custom Email Trigger & Content</span
+        ><br />
+        For example, a buyer adds an image during checkout to be given to the
+        provider.
+      </td>
+      <td>$ 160</td>
+    </tr>
+  
+    <tr data-show-more-row data-show-more-active>
+      <td>
+        <span class="sharetribe-price-name">Whole Prices</span><br />
+        Disallowing sellers from entering prices with cents/pence.
+      </td>
+      <td>$ 160</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">3rd Party Social Login & SSO</span
+        ><br />
+        For example, Google and Facebook.
+      </td>
+      <td>$ 160</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name"
+          >Pulling listings From Shopify, Magento, or Other E-commerce
+          Platforms</span
+        >
+        <br />
+        Requires administrative access to E-commerce platform. Price is quoted per
+        platform. Variants are pulled as separate listings. Includes pulling stock
+        levels regularly.
+      </td>
+      <td>$ 199</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Autocomplete search filters</span> <br />
+        For text fields with a large, finite set of values.  For example, vehicle models.
+      </td>
+      <td>$ 199</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Custom section on landing page</span> <br />
+        For dynamic data such as featured listings
+      </td>
+      <td>$ 199</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Favourites</span> <br />
+        
+      </td>
+      <td>$ 250</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Customised listing previews</span> <br />
+        For example, showing the listing date and location
+      </td>
+      <td>$ 250</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">My Order Pages</span><br />
+        Similar to the Inbox pages, but filtered to only show orders.
+      </td>
+      <td>$ 299</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Cookie Consent</span><br />
+      </td>
+      <td>$ 299</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Multi-language</span><br />
+        For example, users can switch between English and Chinese. Marketplace
+        operator provides the translations.
+      </td>
+      <td>$ 299</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Distance search filter</span> <br />
+        Direct distance only
+      </td>
+      <td>$ 299</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Automatically expiring listings</span> <br />
+        
+      </td>
+      <td>$ 299</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Arrange listing photos</span> <br />
+        The default Sharetribe web template uses the upload order as the photo order
+      </td>
+      <td>$ 299</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Variable Booking Durations</span
+        ><br />
+        For example, some 30-minute lessons and some 60-minute lessons.
+      </td>
+      <td>$ 399</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">CRM Integration</span><br />
+        Triggers can be when a user, listing, or transaction is created.
+      </td>
+      <td>$ 399</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Realtime messaging and conversations not tied to listings</span> <br />
+        
+      </td>
+      <td>$ 399</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Provider Sales Analytics</span><br />
+        Providers can see charts on their dashboard.
+      </td>
+      <td>$ 499</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Calculate Distance </span
+        ><br />Direct, walking, or driving distance/times can be displayed for
+        each listing based on search location.
+      </td>
+      <td>$ 499</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Multi-currency </span><br />For
+        example, some listings are priced in AUD and some listings in NZD.
+      </td>
+      <td>$ 499</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Referral System</span><br />Upon a
+        successful referral, referrer receives discounts not cash payouts.
+      </td>
+      <td>$ 499</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Price Negotiation</span><br />Buyer
+        initiates a conversation and provider can adjust offer price for that
+        transaction.
+      </td>
+      <td>$ 499</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">User Profile Pic on Maps</span
+        ><br />Show user profile pic on maps instead of price
+      </td>
+      <td>$ 599</td>
+    </tr>
       
-    </td>
-    <td>$ 699</td>
-  </tr>
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Add-ons to listings</span><br />For
+        example, cleaning fee.
+      </td>
+      <td>$ 599</td>
+    </tr>
   
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Custom section on landing page</span> <br />
-      For dynamic data such as featured listings
-    </td>
-    <td>$ 699</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">3rd-party File Sources</span><br />For
-      example, browsing and selecting files in Google Drive instead of only from
-      the provider's local device.
-    </td>
-    <td>$ 799</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Different Commission Tiers</span
-      ><br />For example, lower commissions only for paid users or
-      platform-exclusive listings.
-    </td>
-    <td>$ 799</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Digital Files Selling</span>
-    </td>
-    <td>$ 1,200</td>
-  </tr>
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Discounts for Longer Bookings</span
+        ><br />For example, custom prices for weekly bookings
+      </td>
+      <td>$ 599</td>
+    </tr>
   
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Shopping Cart</span> <br />
-      This is implemented as multiple single-vendor shopping carts. Please visit
-      <a href="https://www.depop.com/bag/" target="_blank" class="blue-link"
-        >Depop</a
-      >
-      as an example.
-    </td>
-    <td>$ 1,600</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name"
-        >Advanced Rules For Booking Times</span
-      >
-      <br />
-      For example, a service provider cannot be booked at the same time for
-      different listings.
-    </td>
-    <td>$ 1,900</td>
-  </tr>
-
-  <tr>
-    <td>
-      <span class="sharetribe-price-name">Non-image Media</span> <br />
-      For example, audio, video, or 3D-models on listings or profiles. May
-      require 3rd-party storage solution such as
-      <a
-        href="https://developers.cloudflare.com/r2/pricing/"
-        target="_blank"
-        class="blue-link"
-        >R2</a
-      >
-    </td>
-    <td>$ 1,900</td>
-  </tr>
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Dropoff and Pickup Pricing</span
+        ><br />For rental bookings
+      </td>
+      <td>$ 599</td>
+    </tr>
   
-  <tr>
-    <td>
-      <span class="sharetribe-price-name"
-        >Member discounts</span
-      >
-      <br />
-      Requires access to membership database
-    </td>
-    <td>$ 1,999</td>
-  </tr>
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Deposit for Booking</span><br />Where
+        possible, we recommend implementing this as a card authorisation instead
+        of a refund as card authorisations may be time-limited.
+      </td>
+      <td>$ 599</td>
+    </tr>
   
-</table>
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Discount Vouchers</span><br />Provider
+        can choose a percentage or amount-based discount. Discounts can have an
+        expiration date. Discounts are per-listing.
+      </td>
+      <td>$ 599</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Auctions or Bidding</span><br />Buyer
+        enters their maximum bid. At the end of the auction period, the winning
+        bidder is contacted to checkout and provide their card details.
+      </td>
+      <td>$ 699</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Matchmaking Algorithm</span
+        ><br />Allowing buyers to answer some questions before showing them
+        recommended listings.
+      </td>
+      <td>$ 699</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">User Subscription Fees</span><br />For
+        example, buyers can search/browse only after paying a subscription, or
+        providers can list in a category only after paying a subscription.
+      </td>
+      <td>$ 699</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">2-Factor Authentication</span
+        ><br />
+      </td>
+      <td>$ 699</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Comments on listings</span> <br />
+        
+      </td>
+      <td>$ 699</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">3rd-party File Sources</span><br />For
+        example, browsing and selecting files in Google Drive instead of only from
+        the provider's local device.
+      </td>
+      <td>$ 799</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Different Commission Tiers</span
+        ><br />For example, lower commissions only for paid users or
+        platform-exclusive listings.
+      </td>
+      <td>$ 799</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Variable Shipping Costs</span><br />
+        Requires account with
+        <a href="https://goshippo.com/" target="_blank" class="blue-link"
+          >Shippo.</a
+        > Seller enters listing location.  Buyer enters delivery location and selects shipping method.  Shipping label and tracking number & link are available.
+      </td>
+      <td>$ 1,100</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Digital Files Selling</span>
+      </td>
+      <td>$ 1,200</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Gift Certificates</span
+        ><br />
+      </td>
+      <td>$ 1,300</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Shopping Cart</span> <br />
+        This is implemented as multiple single-vendor shopping carts. Please visit
+        <a href="https://www.depop.com/bag/" target="_blank" class="blue-link"
+          >Depop</a
+        >
+        as an example.
+      </td>
+      <td>$ 1,600</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Identity Check</span> <br />
+        Requires
+        <a
+          href="https://stripe.com/identity"
+          target="_blank"
+          class="blue-link"
+          >Stripe Identity.</a
+        > See <a
+          href="https://stripe.com/docs/identity/use-cases"
+          target="_blank"
+          class="blue-link"
+          >supported use cases</a
+        > and <a
+          href="https://stripe.com/identity#pricing"
+          target="_blank"
+          class="blue-link"
+          >pricing.</a
+        >
+      </td>
+      <td>$ 1,600</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name"
+          >Advanced Rules For Booking Times</span
+        >
+        <br />
+        For example, a service provider cannot be booked at the same time for
+        different listings.
+      </td>
+      <td>$ 1,900</td>
+    </tr>
+  
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Non-image Media</span> <br />
+        For example, audio, video, or 3D-models on listings or profiles. May
+        require 3rd-party storage solution such as
+        <a
+          href="https://developers.cloudflare.com/r2/pricing/"
+          target="_blank"
+          class="blue-link"
+          >R2</a>, <a href="https://cloud.google.com/storage/pricing/"
+          target="_blank"
+          class="blue-link"
+          >CS</a>, or <a href="https://aws.amazon.com/s3/pricing//"
+          target="_blank"
+          class="blue-link"
+          >S3</a>.
+      </td>
+      <td>$ 1,900</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <span class="sharetribe-price-name"
+          >Member discounts</span
+        >
+        <br />
+        Requires access to membership database
+      </td>
+      <td>$ 1,999</td>
+    </tr>
+    
+    <tr>
+      <td>
+        <span class="sharetribe-price-name">Reverse Marketplace Transaction</span>
+      </td>
+      <td>$ 2,999</td>
+    </tr>
+    
+  </table>
 
-<script>
-  (function () {
-    // TODO: get all tables with class sharetribe-pricing-table and loop through them
-    var table = document.getElementsByClassName("sharetribe-pricing-table")[0];
-    var showMoreRow = table.querySelector("tr[data-show-more-row]");
 
-    showMoreRow.onclick = function () {
-      showMoreRow.toggleAttribute("data-show-more-active");
-    };
-  })();
-</script>
+  
+  
+  <script>
+    (function () {
+      // TODO: get all tables with class sharetribe-pricing-table and loop through them
+      var table = document.getElementsByClassName("sharetribe-pricing-table")[0];
+      var showMoreRow = table.querySelector("tr[data-show-more-row]");
+  
+      showMoreRow.onclick = function () {
+        showMoreRow.toggleAttribute("data-show-more-active");
+      };
+    })();
+  </script>
+  
