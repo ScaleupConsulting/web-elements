@@ -598,57 +598,50 @@
                 <!-- Table content will be generated dynamically from JSON data -->
             </tbody>
         </table>
-        
-        <div class="legend">
-            <div class="legend-section">
-                <div class="legend-title">Availability</div>
-                <div class="legend-items">
-                    <div class="legend-item">
-                        <div class="legend-icon all-available">✓</div>
-                        <span>Available</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-icon some-available">!</div>
-                        <span>Limited</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-icon none-available">✗</div>
-                        <span>Unavailable</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-icon">🛠️</div>
-                        <span>Coming Soon</span>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <script>
-        // Constants for availability types
+        /**
+         * PRICING TABLE CONFIGURATION
+         * 
+         * This file contains the configuration for the pricing table.
+         * It's organized into sections:
+         * 
+         * 1. CONSTANTS: Define all the constants used throughout the code
+         * 2. HELPER FUNCTIONS: Functions to create features and handle tooltips
+         * 3. DATA DEFINITION: The actual pricing table data structure
+         * 4. RENDERING LOGIC: Code to generate the HTML from the data
+         * 5. EVENT HANDLERS: Code to handle user interactions
+         */
+
+        /************************************
+         * 1. CONSTANTS
+         ************************************/
+        
+        // Availability types for features
         const AVAILABILITY = {
-            ALL: "all",
-            SOME: "some", 
-            NONE: "none"
+            ALL: "all",     // Available in all cases
+            SOME: "some",   // Limited availability
+            NONE: "none"    // Not available
         };
         
-        // Constants for platform status
+        // Status types for individual platforms
         const STATUS = {
-            AVAILABLE: "available",
-            UNAVAILABLE: "unavailable",
-            LIMITED: "limited",
-            CONSTRUCTION: "construction"
+            AVAILABLE: "available",       // Fully available
+            UNAVAILABLE: "unavailable",   // Not available
+            LIMITED: "limited",           // Limited availability
+            CONSTRUCTION: "construction"  // Coming soon
         };
         
-        // Constants for status symbols
+        // Symbols used to represent status
         const SYMBOLS = {
-            AVAILABLE: "✓",
-            LIMITED: "!",
-            UNAVAILABLE: "✗",
-            CONSTRUCTION: "🛠️"
+            AVAILABLE: "✓",       // Checkmark for available
+            LIMITED: "!",         // Exclamation for limited
+            UNAVAILABLE: "✗",     // X for unavailable
+            CONSTRUCTION: "🛠️"    // Tools for under construction/coming soon
         };
         
-        // Constants for platform names
+        // Platform names
         const PLATFORM = {
             ANDROID: "Android",
             IOS: "iOS",
@@ -658,240 +651,426 @@
         
         // Common tooltip texts
         const TOOLTIP = {
+            // Basic availability messages
             AVAILABLE_ANDROID: "Available on Android",
             AVAILABLE_IOS: "Available on iOS",
             AVAILABLE_WEB: "Available on Web",
+            AVAILABLE_MOBILE_WEB: "Available on Mobile Web",
             UNAVAILABLE: "Currently Unavailable",
+            NOT_AVAILABLE: "Not available",
+            
+            // Coming soon messages
             COMING_SOON_ANDROID: "Coming soon on Android",
             COMING_SOON_IOS: "Coming soon on iOS",
             COMING_SOON_WEB: "Coming soon on Web",
-            NOT_AVAILABLE: "Not available",
+            COMING_SOON_MOBILE_WEB: "Coming soon on Mobile Web",
+            // Combined platform messages
+            COMING_SOON_ANDROID_WEB: "Coming soon on Android and Web",
+            COMING_SOON_IOS_WEB: "Coming soon on iOS and Web",
+            COMING_SOON_ANDROID_IOS: "Coming soon on Android and iOS",
             ALL_PLATFORMS: "Available on Android, iOS and Web",
+            
+            // Special messages
             MOST_UPDATES: "Most updates",
             MAIN_MOST_UPDATES: "Available on Android, iOS and Web for most updates",
             SUB_MOST_UPDATES: "Custom changes to the web-template may require a review by the App Store"
         };
 
-        // Define the pricing table data in JSON format
-        const pricingData = {
-            plans: [
-                { name: "Lite", header: true },
-                { name: "Pro", header: true },
-                { name: "Extend", header: true }
-            ],
-            features: [
-                {
-                    name: "No Setup Fee",
-                    static: true,
-                    availability: [AVAILABILITY.ALL, AVAILABILITY.ALL, AVAILABILITY.ALL]
-                },
-                {
-                    name: "No hidden fees or extra charges",
-                    static: true,
-                    availability: [AVAILABILITY.ALL, AVAILABILITY.ALL, AVAILABILITY.ALL]
-                },
-                {
-                    name: "Email & Zoom Support",
-                    static: true,
-                    availability: [AVAILABILITY.ALL, AVAILABILITY.ALL, AVAILABILITY.ALL]
-                },
-                {
-                    name: "Instant Updates",
-                    static: true,
-                    availability: [AVAILABILITY.ALL, AVAILABILITY.ALL, AVAILABILITY.ALL],
-                },
-                {
-                    name: "No App Store Reviews Necessary for Updates",
-                    id: "app-store",
-                    availability: [AVAILABILITY.ALL, AVAILABILITY.ALL, AVAILABILITY.SOME],
-                    tooltip: [TOOLTIP.ALL_PLATFORMS, TOOLTIP.ALL_PLATFORMS, null],
-                    tooltipConfig: [
-                        { },
-                        { },
-                        { mainMostUpdates: true },
-                    ],
-                    platforms: [
-                        {
-                            name: PLATFORM.ANDROID,
-                            status: [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.LIMITED],
-                            tooltip: [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_ANDROID, null],
-                            tooltipConfig: [
-                                {},
-                                {},
-                                { subMostUpdates: true },
-                            ]
-                        },
-                        {
-                            name: PLATFORM.IOS,
-                            status: [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.LIMITED],
-                            tooltip: [TOOLTIP.AVAILABLE_IOS, TOOLTIP.AVAILABLE_IOS, null],
-                            tooltipConfig: [
-                                {},
-                                {},
-                                { subMostUpdates: true }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    name: "Tag Manager",
-                    id: "tag-manager",
-                    availability: [AVAILABILITY.SOME, AVAILABILITY.SOME, AVAILABILITY.ALL],
-                    customTooltip: [
-                        TOOLTIP.AVAILABLE_ANDROID, 
-                        "Available on Android, iOS coming soon", 
-                        TOOLTIP.ALL_PLATFORMS
-                    ],
-                    platforms: [
-                        {
-                            name: PLATFORM.ANDROID,
-                            status: [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.AVAILABLE],
-                            tooltip: [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_ANDROID]
-                        },
-                        {
-                            name: PLATFORM.IOS,
-                            status: [STATUS.UNAVAILABLE, STATUS.CONSTRUCTION, STATUS.AVAILABLE],
-                            tooltip: [TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_IOS, TOOLTIP.AVAILABLE_ANDROID]
-                        },
-                        {
-                            name: PLATFORM.WEB,
-                            status: [STATUS.UNAVAILABLE, STATUS.UNAVAILABLE, STATUS.AVAILABLE],
-                            tooltip: [TOOLTIP.UNAVAILABLE, TOOLTIP.UNAVAILABLE, TOOLTIP.AVAILABLE_WEB]
-                        }
-                    ]
-                },
-                {
-                    name: "Push Notifications",
-                    id: "push",
-                    availability: [AVAILABILITY.NONE, AVAILABILITY.NONE, AVAILABILITY.ALL],
-                    tooltip: [TOOLTIP.NOT_AVAILABLE, TOOLTIP.NOT_AVAILABLE, TOOLTIP.ALL_PLATFORMS],
-                    platforms: [
-                        {
-                            name: PLATFORM.ANDROID,
-                            status: [STATUS.UNAVAILABLE, STATUS.LIMITED, STATUS.AVAILABLE],
-                            tooltip: [TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_ANDROID, TOOLTIP.AVAILABLE_ANDROID]
-                        },
-                        {
-                            name: PLATFORM.IOS,
-                            status: [STATUS.UNAVAILABLE, STATUS.LIMITED, STATUS.AVAILABLE],
-                            tooltip: [TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_IOS, TOOLTIP.AVAILABLE_IOS]
-                        },
-                        {
-                            name: PLATFORM.WEB,
-                            status: [STATUS.UNAVAILABLE, STATUS.UNAVAILABLE, STATUS.AVAILABLE],
-                            tooltip: [TOOLTIP.UNAVAILABLE, TOOLTIP.UNAVAILABLE, TOOLTIP.AVAILABLE_WEB]
-                        }
-                    ]
-                },
-                {
-                    name: "Biometric Login",
-                    id: "biometric",
-                    availability: [AVAILABILITY.NONE, AVAILABILITY.NONE, AVAILABILITY.SOME],
-                    tooltip: [TOOLTIP.NOT_AVAILABLE, TOOLTIP.NOT_AVAILABLE, "Available on Android and iOS"],
-                    platforms: [
-                        {
-                            name: PLATFORM.ANDROID,
-                            status: [STATUS.UNAVAILABLE, STATUS.UNAVAILABLE, STATUS.CONSTRUCTION],
-                            tooltip: [TOOLTIP.UNAVAILABLE, TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_ANDROID]
-                        },
-                        {
-                            name: PLATFORM.IOS,
-                            status: [STATUS.UNAVAILABLE, STATUS.LIMITED, STATUS.AVAILABLE],
-                            tooltip: [TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_IOS, TOOLTIP.AVAILABLE_IOS]
-                        },
-                        {
-                            name: PLATFORM.WEB,
-                            status: [STATUS.UNAVAILABLE, STATUS.UNAVAILABLE, STATUS.CONSTRUCTION],
-                            tooltip: [TOOLTIP.UNAVAILABLE, TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_WEB]
-                        }
-                    ]
-                },
-                {
-                    name: "Deep Links",
-                    id: "deep-links",
-                    availability: [AVAILABILITY.NONE, AVAILABILITY.NONE, AVAILABILITY.SOME],
-                    tooltip: [TOOLTIP.NOT_AVAILABLE, TOOLTIP.NOT_AVAILABLE, "Available on Android and iOS"],
-                    platforms: [
-                        {
-                            name: PLATFORM.ANDROID,
-                            status: [STATUS.UNAVAILABLE, STATUS.LIMITED, STATUS.AVAILABLE],
-                            tooltip: [TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_ANDROID, TOOLTIP.AVAILABLE_ANDROID]
-                        },
-                        {
-                            name: PLATFORM.IOS,
-                            status: [STATUS.UNAVAILABLE, STATUS.LIMITED, STATUS.AVAILABLE],
-                            tooltip: [TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_IOS, TOOLTIP.AVAILABLE_IOS]
-                        }
-                    ]
-                },
-                {
-                    name: "Storage Access",
-                    static: true,
-                    availability: [AVAILABILITY.ALL, AVAILABILITY.ALL, AVAILABILITY.ALL],
-                    tooltip: TOOLTIP.ALL_PLATFORMS
-                },
-                {
-                    name: "Camera Access",
-                    id: "camera",
-                    availability: [AVAILABILITY.SOME, AVAILABILITY.SOME, AVAILABILITY.SOME],
-                    tooltip: ["Available on Android and iOS", "Available on Android and iOS", "Available on Android and iOS"],
-                    platforms: [
-                        {
-                            name: PLATFORM.ANDROID,
-                            status: [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.AVAILABLE],
-                            tooltip: [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_ANDROID]
-                        },
-                        {
-                            name: PLATFORM.IOS,
-                            status: [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.AVAILABLE],
-                            tooltip: [TOOLTIP.AVAILABLE_IOS, TOOLTIP.AVAILABLE_IOS, TOOLTIP.AVAILABLE_IOS]
-                        },
-                        {
-                            name: PLATFORM.WEB,
-                            status: [STATUS.UNAVAILABLE, STATUS.UNAVAILABLE, STATUS.CONSTRUCTION],
-                            tooltip: [TOOLTIP.UNAVAILABLE, TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_WEB]
-                        },
-                        {
-                            name: PLATFORM.MOBILE_WEB,
-                            status: [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.AVAILABLE],
-                            tooltip: [TOOLTIP.AVAILABLE_WEB, TOOLTIP.AVAILABLE_WEB, TOOLTIP.AVAILABLE_WEB]
-                        }
-                    ]
-                },
-                {
-                    name: "Geolocation",
-                    static: true,
-                    availability: [AVAILABILITY.ALL, AVAILABILITY.ALL, AVAILABILITY.ALL],
-                    tooltip: TOOLTIP.ALL_PLATFORMS
-                }
-            ]
-        };
-
-        // Function to generate tooltip text based on config
+        /************************************
+         * 2. HELPER FUNCTIONS
+         ************************************/
+        
+        /**
+         * Combines multiple tooltip messages into one
+         * @param {...string} tooltips - The tooltip messages to combine
+         * @returns {string|null} - The combined tooltip or null if no valid tooltips
+         */
+        function combineTooltips(...tooltips) {
+            // Filter out null or undefined values
+            const validTooltips = tooltips.filter(tip => tip != null);
+            
+            if (validTooltips.length === 0) {
+                return null;
+            }
+            
+            if (validTooltips.length === 1) {
+                return validTooltips[0];
+            }
+            
+            // Join multiple tooltips with a separator
+            return validTooltips.join(' • ');
+        }
+        
+        /**
+         * Generates tooltip text based on configuration
+         * @param {string} baseTooltip - The base tooltip text
+         * @param {Object} config - Configuration options for the tooltip
+         * @returns {string} - The final tooltip text
+         */
         function getTooltipText(baseTooltip, config) {
             if (!config || Object.keys(config).length === 0) {
                 return baseTooltip;
             }
             
+            // Handle combined tooltips
+            if (config.combine) {
+                return combineTooltips(baseTooltip, ...config.combine);
+            }
+            
+            // Handle special tooltip cases
             if (config.mostUpdates) {
                 return TOOLTIP.MOST_UPDATES;
             }
-
+            
             if (config.mainMostUpdates) {
                 return TOOLTIP.MAIN_MOST_UPDATES;
             }
-
+            
             if (config.subMostUpdates) {
                 return TOOLTIP.SUB_MOST_UPDATES;
             }
             
-            // Add more conditional tooltip text options here
+            // Custom text override
             if (config.customText) {
                 return config.customText;
             }
+            
+            return baseTooltip;
         }
 
-        // Function to generate the pricing table HTML from JSON data
+        /**
+         * Creates a static feature (available on all plans, no expandable details)
+         * @param {string} name - The name of the feature
+         * @param {string} tooltip - Optional tooltip text
+         * @returns {Object} - The feature object
+         */
+        function createStaticFeature(name, tooltip = null) {
+            return {
+                name: name,
+                static: true,
+                availability: [AVAILABILITY.ALL, AVAILABILITY.ALL, AVAILABILITY.ALL],
+                tooltip: tooltip
+            };
+        }
+        
+        /**
+         * Creates a standard feature with expandable platform details
+         * @param {string} name - The name of the feature
+         * @param {string} id - Unique identifier for the feature
+         * @param {Array} availability - Availability for each plan
+         * @param {Array|string} tooltip - Tooltip text for each plan
+         * @param {Array} platforms - Platform details
+         * @param {Array} tooltipConfig - Optional tooltip configuration
+         * @returns {Object} - The feature object
+         */
+        function createFeature(name, id, availability, tooltip = null, platforms = null, tooltipConfig = null) {
+            const feature = {
+                name: name,
+                id: id,
+                availability: availability
+            };
+            
+            if (tooltip) {
+                feature.tooltip = tooltip;
+            }
+            
+            if (platforms) {
+                feature.platforms = platforms;
+            }
+            
+            if (tooltipConfig) {
+                feature.tooltipConfig = tooltipConfig;
+            }
+            
+            return feature;
+        }
+        
+        /**
+         * Creates a platform entry for a feature
+         * @param {string} name - The name of the platform
+         * @param {Array} status - Status for each plan
+         * @param {Array} tooltip - Tooltip text for each plan
+         * @param {Array} tooltipConfig - Optional tooltip configuration
+         * @returns {Object} - The platform object
+         */
+        function createPlatform(name, status, tooltip = null, tooltipConfig = null) {
+            const platform = {
+                name: name,
+                status: status
+            };
+            
+            if (tooltip) {
+                platform.tooltip = tooltip;
+            }
+            
+            if (tooltipConfig) {
+                platform.tooltipConfig = tooltipConfig;
+            }
+            
+            return platform;
+        }
+
+        /************************************
+         * 3. DATA DEFINITION
+         ************************************/
+        
+        /**
+         * The pricing table data structure
+         * 
+         * This defines all the plans and features shown in the pricing table.
+         * To add a new feature:
+         * 1. For simple features: use createStaticFeature()
+         * 2. For complex features: use createFeature() with platform details
+         */
+        const pricingData = {
+            // Define the plans (columns)
+            plans: [
+                { name: "Lite", header: true },
+                { name: "Pro", header: true },
+                { name: "Extend", header: true }
+            ],
+            
+            // Define the features (rows)
+            features: [
+                // SECTION: Basic Features
+                // Simple static features with consistent availability
+                createStaticFeature("No Setup Fee"),
+                createStaticFeature("No hidden fees or extra charges"),
+                createStaticFeature("Email & Zoom Support"),
+                createStaticFeature("Instant Updates", TOOLTIP.ALL_PLATFORMS),
+                createStaticFeature("Geolocation", TOOLTIP.ALL_PLATFORMS),
+                
+                // SECTION: Platform Features
+                // Complex feature with custom tooltips and platform details
+                createFeature(
+                    "No App Store Reviews Necessary for Updates",
+                    "app-store",
+                    [AVAILABILITY.ALL, AVAILABILITY.ALL, AVAILABILITY.SOME],
+                    [TOOLTIP.ALL_PLATFORMS, TOOLTIP.ALL_PLATFORMS, null],
+                    [
+                        createPlatform(
+                            PLATFORM.ANDROID,
+                            [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.LIMITED],
+                            [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_ANDROID, null],
+                            [{}, {}, { subMostUpdates: true }]
+                        ),
+                        createPlatform(
+                            PLATFORM.IOS,
+                            [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.LIMITED],
+                            [TOOLTIP.AVAILABLE_IOS, TOOLTIP.AVAILABLE_IOS, null],
+                            [{}, {}, { subMostUpdates: true }]
+                        ),
+                        createPlatform(
+                            PLATFORM.WEB,
+                            [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.AVAILABLE],
+                            [TOOLTIP.AVAILABLE_WEB, TOOLTIP.AVAILABLE_WEB, TOOLTIP.AVAILABLE_WEB]
+                        )
+                    ],
+                    [
+                        {},
+                        {},
+                        { mainMostUpdates: true }
+                    ]
+                ),
+                
+                // SECTION: Advanced Features
+                // Tag Manager
+                createFeature(
+                    "Tag Manager",
+                    "tag-manager",
+                    [AVAILABILITY.SOME, AVAILABILITY.SOME, AVAILABILITY.ALL],
+                    [
+                        TOOLTIP.AVAILABLE_ANDROID, 
+                        null,  // Will use tooltipConfig for combined tooltip
+                        TOOLTIP.ALL_PLATFORMS
+                    ],
+                    [
+                        createPlatform(
+                            PLATFORM.ANDROID,
+                            [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.AVAILABLE],
+                            [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_ANDROID]
+                        ),
+                        createPlatform(
+                            PLATFORM.IOS,
+                            [STATUS.UNAVAILABLE, STATUS.CONSTRUCTION, STATUS.AVAILABLE],
+                            [TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_IOS, TOOLTIP.AVAILABLE_IOS]
+                        ),
+                        createPlatform(
+                            PLATFORM.WEB,
+                            [STATUS.UNAVAILABLE, STATUS.UNAVAILABLE, STATUS.AVAILABLE],
+                            [TOOLTIP.UNAVAILABLE, TOOLTIP.UNAVAILABLE, TOOLTIP.AVAILABLE_WEB]
+                        )
+                    ],
+                    [
+                        {},
+                        { combine: [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.COMING_SOON_IOS] },
+                        {}
+                    ]
+                ),
+                
+                // Push Notifications feature
+                createFeature(
+                    "Push Notifications", 
+                    "push",
+                    [AVAILABILITY.NONE, AVAILABILITY.NONE, AVAILABILITY.ALL],
+                    [TOOLTIP.NOT_AVAILABLE, TOOLTIP.NOT_AVAILABLE, TOOLTIP.ALL_PLATFORMS],
+                    [
+                        createPlatform(
+                            PLATFORM.ANDROID,
+                            [STATUS.UNAVAILABLE, STATUS.LIMITED, STATUS.AVAILABLE],
+                            [TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_ANDROID, TOOLTIP.AVAILABLE_ANDROID]
+                        ),
+                        createPlatform(
+                            PLATFORM.IOS,
+                            [STATUS.UNAVAILABLE, STATUS.LIMITED, STATUS.AVAILABLE],
+                            [TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_IOS, TOOLTIP.AVAILABLE_IOS]
+                        ),
+                        createPlatform(
+                            PLATFORM.WEB,
+                            [STATUS.UNAVAILABLE, STATUS.UNAVAILABLE, STATUS.AVAILABLE],
+                            [TOOLTIP.UNAVAILABLE, TOOLTIP.UNAVAILABLE, TOOLTIP.AVAILABLE_WEB]
+                        )
+                    ]
+                ),
+                
+                // Biometric Login feature
+                createFeature(
+                    "Biometric Login",
+                    "biometric",
+                    [AVAILABILITY.NONE, AVAILABILITY.NONE, AVAILABILITY.SOME],
+                    [
+                        TOOLTIP.NOT_AVAILABLE, 
+                        TOOLTIP.NOT_AVAILABLE, 
+                        null  // Will use tooltipConfig for combined tooltip
+                    ],
+                    [
+                        createPlatform(
+                            PLATFORM.ANDROID,
+                            [STATUS.UNAVAILABLE, STATUS.UNAVAILABLE, STATUS.CONSTRUCTION],
+                            [TOOLTIP.UNAVAILABLE, TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_ANDROID]
+                        ),
+                        createPlatform(
+                            PLATFORM.IOS,
+                            [STATUS.UNAVAILABLE, STATUS.LIMITED, STATUS.AVAILABLE],
+                            [TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_IOS, TOOLTIP.AVAILABLE_IOS]
+                        ),
+                        createPlatform(
+                            PLATFORM.WEB,
+                            [STATUS.UNAVAILABLE, STATUS.UNAVAILABLE, STATUS.CONSTRUCTION],
+                            [TOOLTIP.UNAVAILABLE, TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_WEB]
+                        )
+                    ],
+                    [
+                        {},
+                        {},
+                        { combine: [TOOLTIP.AVAILABLE_IOS, TOOLTIP.COMING_SOON_ANDROID_WEB] }
+                    ]
+                ),
+                
+                // Deep Links feature
+                createFeature(
+                    "Deep Links",
+                    "deep-links",
+                    [AVAILABILITY.NONE, AVAILABILITY.SOME, AVAILABILITY.ALL],
+                    [TOOLTIP.NOT_AVAILABLE, null, TOOLTIP.ALL_PLATFORMS],
+                    [
+                        createPlatform(
+                            PLATFORM.ANDROID,
+                            [STATUS.UNAVAILABLE, STATUS.UNAVAILABLE, STATUS.AVAILABLE],
+                            [TOOLTIP.UNAVAILABLE, TOOLTIP.UNAVAILABLE, TOOLTIP.AVAILABLE_ANDROID]
+                        ),
+                        createPlatform(
+                            PLATFORM.IOS,
+                            [STATUS.UNAVAILABLE, STATUS.UNAVAILABLE, STATUS.AVAILABLE],
+                            [TOOLTIP.UNAVAILABLE, TOOLTIP.UNAVAILABLE, TOOLTIP.AVAILABLE_IOS]
+                        ),
+                        createPlatform(
+                            PLATFORM.WEB,
+                            [STATUS.UNAVAILABLE, STATUS.CONSTRUCTION, STATUS.AVAILABLE],
+                            [TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_WEB, TOOLTIP.AVAILABLE_WEB]
+                        )
+                    ],
+                    [
+                        {},
+                        { combine: [TOOLTIP.COMING_SOON_WEB] },
+                        {}
+                    ]
+                ),
+
+                // Storage Access feature
+                createFeature(
+                    "Storage Access",
+                    "storage-access",
+                    [AVAILABILITY.ALL, AVAILABILITY.ALL, AVAILABILITY.ALL],
+                    [TOOLTIP.ALL_PLATFORMS, TOOLTIP.ALL_PLATFORMS, TOOLTIP.ALL_PLATFORMS],
+                    [
+                        createPlatform(
+                            PLATFORM.ANDROID,
+                            [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.AVAILABLE],
+                            [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_ANDROID]
+                        ),
+                        createPlatform(
+                            PLATFORM.IOS,
+                            [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.AVAILABLE],
+                            [TOOLTIP.AVAILABLE_IOS, TOOLTIP.AVAILABLE_IOS, TOOLTIP.AVAILABLE_IOS]
+                        ),
+                        createPlatform(
+                            PLATFORM.WEB,
+                            [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.AVAILABLE],
+                            [TOOLTIP.AVAILABLE_WEB, TOOLTIP.AVAILABLE_WEB, TOOLTIP.AVAILABLE_WEB]
+                        )
+                    ]
+                ),
+
+                // Camera Access feature
+                createFeature(
+                    "Camera Access",
+                    "camera-access",
+                    [AVAILABILITY.SOME, AVAILABILITY.SOME, AVAILABILITY.SOME],
+                    [null, null, null],
+                    [
+                        createPlatform(
+                            PLATFORM.ANDROID,
+                            [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.AVAILABLE],
+                            [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_ANDROID]
+                        ),
+                        createPlatform(
+                            PLATFORM.IOS,
+                            [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.AVAILABLE],
+                            [TOOLTIP.AVAILABLE_IOS, TOOLTIP.AVAILABLE_IOS, TOOLTIP.AVAILABLE_IOS]
+                        ),
+                        createPlatform(
+                            PLATFORM.WEB,
+                            [STATUS.UNAVAILABLE, STATUS.UNAVAILABLE, STATUS.CONSTRUCTION],
+                            [TOOLTIP.UNAVAILABLE, TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_WEB]
+                        ),
+                        createPlatform(
+                            PLATFORM.MOBILE_WEB,
+                            [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.AVAILABLE],
+                            [TOOLTIP.AVAILABLE_MOBILE_WEB, TOOLTIP.AVAILABLE_MOBILE_WEB, TOOLTIP.AVAILABLE_MOBILE_WEB]
+                        )
+                    ],
+                    [
+                        { combine: ["Available on Android, iOS and mobile web"] },
+                        { combine: ["Available on Android, iOS and mobile web"] },
+                        { combine: ["Available on Android, iOS and mobile web, coming soon to web"] }
+                    ]
+                ),
+                
+                // Geolocation
+                createStaticFeature("Geolocation", TOOLTIP.ALL_PLATFORMS),
+
+            ]
+        };
+
+        /************************************
+         * 4. RENDERING LOGIC
+         ************************************/
+        
+        /**
+         * Generates the pricing table HTML from the data structure
+         * @param {Object} data - The pricing table data
+         */
         function generatePricingTable(data) {
             const tableBody = document.querySelector('.pricing-table tbody');
             tableBody.innerHTML = ''; // Clear existing content
@@ -933,7 +1112,6 @@
                     
                     if (feature.customTooltip && feature.customTooltip[i]) {
                         tooltipText = feature.customTooltip[i];
-                        indicator.setAttribute('data-custom-tooltip', '');
                     } else if (feature.tooltip) {
                         if (Array.isArray(feature.tooltip)) {
                             const baseTooltip = feature.tooltip[i];
@@ -1007,6 +1185,10 @@
             });
         }
 
+        /************************************
+         * 5. EVENT HANDLERS
+         ************************************/
+        
         document.addEventListener('DOMContentLoaded', function() {
             // Generate the table from JSON data
             generatePricingTable(pricingData);
@@ -1039,7 +1221,10 @@
                 });
             });
             
-            // Function to toggle feature expansion
+            /**
+             * Toggles the expansion of a feature row to show platform details
+             * @param {HTMLElement} featureRow - The feature row to toggle
+             */
             function toggleFeatureExpansion(featureRow) {
                 const featureId = featureRow.getAttribute('data-feature');
                 const detailsRows = document.querySelectorAll(`.details-row[data-parent="${featureId}"]`);
@@ -1133,7 +1318,9 @@
                 });
             }
             
-            // Add tooltip positioning logic to prevent them from being cut off
+            /**
+             * Adjusts tooltip positions to prevent them from being cut off at screen edges
+             */
             function adjustTooltipPosition() {
                 const tooltipElements = document.querySelectorAll('[data-tooltip]');
                 
