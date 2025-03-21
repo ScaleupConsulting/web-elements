@@ -50,7 +50,8 @@
             background-color: white;
             box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
             border-radius: 12px;
-            overflow: hidden;
+            overflow: visible !important;
+            position: relative;
         }
         
         .pricing-table th:first-child,
@@ -422,7 +423,7 @@
             color: #4a7aff;
         }
         
-        /* Add tooltip styling */
+        /* Update tooltip styling to ensure it flows over table edges and handles long text */
         [data-tooltip] {
             position: relative;
             cursor: pointer;
@@ -436,15 +437,23 @@
             transform: translateX(-50%);
             background-color: rgba(0, 0, 0, 0.8);
             color: white;
-            padding: 5px 10px;
+            padding: 8px 12px;
             border-radius: 4px;
             font-size: 12px;
-            white-space: nowrap;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s, visibility 0.3s;
-            z-index: 10;
+            z-index: 100;
             pointer-events: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            
+            /* Improved text handling */
+            max-width: 250px;
+            width: max-content;
+            white-space: normal;
+            word-wrap: break-word;
+            text-align: center;
+            line-height: 1.4;
         }
         
         [data-tooltip]:hover::after {
@@ -452,87 +461,34 @@
             visibility: visible;
         }
         
-        /* Update the HTML for the availability indicators in collapsed view */
-        .all-available, .some-available, .none-available {
+        /* Ensure tooltips don't get cut off at table edges */
+        .pricing-table {
+            overflow: visible !important;
             position: relative;
         }
         
-        .all-available::after, .some-available::after, .none-available::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 125%;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
-            z-index: 10;
-            pointer-events: none;
+        /* Ensure parent containers don't clip tooltips */
+        .pricing-container {
+            overflow: visible !important;
         }
         
-        .all-available:hover::after, .some-available:hover::after, .none-available:hover::after {
-            opacity: 1;
-            visibility: visible;
+        /* Fix for tooltips that might get cut off at the left/right edges */
+        [data-tooltip].left-align::after {
+            left: 0;
+            transform: translateX(0);
         }
         
-        /* Update the HTML for the platform status in expanded view */
-        .platform-status {
-            position: relative;
+        [data-tooltip].right-align::after {
+            left: auto;
+            right: 0;
+            transform: translateX(0);
         }
         
-        .platform-status::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 125%;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
-            z-index: 10;
-            pointer-events: none;
-        }
-        
-        .platform-status:hover::after {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        /* Update tooltip handling for mobile devices */
+        /* For mobile devices, ensure tooltips are fully visible */
         @media (max-width: 768px) {
-            /* Change tooltip behavior for touch devices */
-            [data-tooltip] {
-                position: relative;
-            }
-            
-            /* Make tooltips appear on tap instead of hover */
             [data-tooltip]::after {
-                opacity: 0;
-                visibility: hidden;
-                transition: opacity 0.3s, visibility 0.3s;
-                pointer-events: none;
+                max-width: 200px;
                 width: auto;
-                max-width: 200px; /* Limit width on small screens */
-                white-space: normal; /* Allow text to wrap */
-                text-align: center;
-            }
-            
-            /* Use JavaScript to toggle tooltip visibility on tap */
-            [data-tooltip].tooltip-active::after {
-                opacity: 1;
-                visibility: visible;
             }
         }
         
@@ -555,19 +511,67 @@
             }
         }
         
-        /* Update the HTML structure to remove expansion from specified rows */
-        
+           
         /* No Setup Fee - remove data-feature attribute and expansion arrow */
         .static-row td:first-child::before {
-            content: none; /* Remove the expansion arrow */
+            content: none;
         }
         
         .static-row {
-            cursor: default; /* Remove the pointer cursor */
+            cursor: default;
         }
         
         .static-row:hover {
-            background-color: transparent; /* Remove hover effect */
+            background-color: transparent;
+        }
+        
+        /* Fix tooltip alignment in expanded rows */
+        .details-row [data-tooltip]::after {
+            text-align: center;
+            width: max-content;
+            white-space: normal;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Ensure platform status tooltips are properly centered */
+        .platform-status[data-tooltip]::after {
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            min-width: 150px;
+        }
+        
+        /* Make sure the tooltip container is properly centered */
+        .platform-status {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            font-size: 16px;
+        }
+        
+        /* Ensure the tooltip is positioned relative to its container */
+        .details-row td {
+            position: relative;
+        }
+        
+        /* Add specific styling for the tooltip text */
+        [data-tooltip]::after {
+            width: auto;
+            min-width: 150px;
+            max-width: 300px;
+            white-space: normal;
+            word-wrap: break-word;
+            text-align: center;
+        }
+        
+        /* Ensure the tooltip is centered for all elements */
+        [data-tooltip]::after {
+            left: 50%;
+            transform: translateX(-50%);
         }
     </style>
 </head>
@@ -662,7 +666,10 @@
             COMING_SOON_IOS: "Coming soon on iOS",
             COMING_SOON_WEB: "Coming soon on Web",
             NOT_AVAILABLE: "Not available",
-            ALL_PLATFORMS: "Available on Android, iOS and Web"
+            ALL_PLATFORMS: "Available on Android, iOS and Web",
+            MOST_UPDATES: "Most updates",
+            MAIN_MOST_UPDATES: "Available on Android, iOS and Web for most updates",
+            SUB_MOST_UPDATES: "Custom changes to the web-template may require a review by the App Store"
         };
 
         // Define the pricing table data in JSON format
@@ -692,23 +699,37 @@
                     name: "Instant Updates",
                     static: true,
                     availability: [AVAILABILITY.ALL, AVAILABILITY.ALL, AVAILABILITY.ALL],
-                    tooltip: TOOLTIP.ALL_PLATFORMS
                 },
                 {
                     name: "No App Store Reviews Necessary for Updates",
                     id: "app-store",
                     availability: [AVAILABILITY.ALL, AVAILABILITY.ALL, AVAILABILITY.SOME],
-                    tooltip: [TOOLTIP.ALL_PLATFORMS, TOOLTIP.ALL_PLATFORMS, "Most updates"],
+                    tooltip: [TOOLTIP.ALL_PLATFORMS, TOOLTIP.ALL_PLATFORMS, null],
+                    tooltipConfig: [
+                        { },
+                        { },
+                        { mainMostUpdates: true },
+                    ],
                     platforms: [
                         {
                             name: PLATFORM.ANDROID,
                             status: [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.LIMITED],
-                            tooltip: [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_ANDROID, "Most updates"]
+                            tooltip: [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_ANDROID, null],
+                            tooltipConfig: [
+                                {},
+                                {},
+                                { subMostUpdates: true },
+                            ]
                         },
                         {
                             name: PLATFORM.IOS,
                             status: [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.LIMITED],
-                            tooltip: [TOOLTIP.AVAILABLE_IOS, TOOLTIP.AVAILABLE_IOS, "Most updates"]
+                            tooltip: [TOOLTIP.AVAILABLE_IOS, TOOLTIP.AVAILABLE_IOS, null],
+                            tooltipConfig: [
+                                {},
+                                {},
+                                { subMostUpdates: true }
+                            ]
                         }
                     ]
                 },
@@ -846,6 +867,30 @@
             ]
         };
 
+        // Function to generate tooltip text based on config
+        function getTooltipText(baseTooltip, config) {
+            if (!config || Object.keys(config).length === 0) {
+                return baseTooltip;
+            }
+            
+            if (config.mostUpdates) {
+                return TOOLTIP.MOST_UPDATES;
+            }
+
+            if (config.mainMostUpdates) {
+                return TOOLTIP.MAIN_MOST_UPDATES;
+            }
+
+            if (config.subMostUpdates) {
+                return TOOLTIP.SUB_MOST_UPDATES;
+            }
+            
+            // Add more conditional tooltip text options here
+            if (config.customText) {
+                return config.customText;
+            }
+        }
+
         // Function to generate the pricing table HTML from JSON data
         function generatePricingTable(data) {
             const tableBody = document.querySelector('.pricing-table tbody');
@@ -884,15 +929,23 @@
                     }
                     
                     // Set tooltip
+                    let tooltipText = '';
+                    
                     if (feature.customTooltip && feature.customTooltip[i]) {
-                        indicator.setAttribute('data-tooltip', feature.customTooltip[i]);
+                        tooltipText = feature.customTooltip[i];
                         indicator.setAttribute('data-custom-tooltip', '');
                     } else if (feature.tooltip) {
                         if (Array.isArray(feature.tooltip)) {
-                            indicator.setAttribute('data-tooltip', feature.tooltip[i]);
+                            const baseTooltip = feature.tooltip[i];
+                            const config = feature.tooltipConfig && feature.tooltipConfig[i] ? feature.tooltipConfig[i] : {};
+                            tooltipText = getTooltipText(baseTooltip, config);
                         } else {
-                            indicator.setAttribute('data-tooltip', feature.tooltip);
+                            tooltipText = feature.tooltip;
                         }
+                    }
+                    
+                    if (tooltipText) {
+                        indicator.setAttribute('data-tooltip', tooltipText);
                     }
                     
                     availabilityCell.appendChild(indicator);
@@ -930,9 +983,18 @@
                                 statusSpan.textContent = SYMBOLS.CONSTRUCTION;
                             }
                             
-                            // Set tooltip
-                            if (platform.tooltip && platform.tooltip[i]) {
-                                statusSpan.setAttribute('data-tooltip', platform.tooltip[i]);
+                            // Set tooltip with config support
+                            if (platform.tooltip) {
+                                const baseTooltip = platform.tooltip[i];
+                                let tooltipText = baseTooltip;
+                                
+                                if (platform.tooltipConfig && platform.tooltipConfig[i]) {
+                                    tooltipText = getTooltipText(baseTooltip, platform.tooltipConfig[i]);
+                                }
+                                
+                                if (tooltipText) {
+                                    statusSpan.setAttribute('data-tooltip', tooltipText);
+                                }
                             }
                             
                             statusCell.appendChild(statusSpan);
@@ -1069,6 +1131,41 @@
                         }, 2000);
                     });
                 });
+            }
+            
+            // Add tooltip positioning logic to prevent them from being cut off
+            function adjustTooltipPosition() {
+                const tooltipElements = document.querySelectorAll('[data-tooltip]');
+                
+                tooltipElements.forEach(el => {
+                    // Reset any previously applied positioning classes
+                    el.classList.remove('left-align', 'right-align');
+                    
+                    // Get element's position relative to the viewport
+                    const rect = el.getBoundingClientRect();
+                    const tooltipWidth = 250; // Approximate max width of tooltip
+                    
+                    // Check if tooltip would extend beyond left edge of screen
+                    if (rect.left < tooltipWidth / 2) {
+                        el.classList.add('left-align');
+                    }
+                    // Check if tooltip would extend beyond right edge of screen
+                    else if (window.innerWidth - rect.right < tooltipWidth / 2) {
+                        el.classList.add('right-align');
+                    }
+                });
+            }
+            
+            // Run on page load
+            adjustTooltipPosition();
+            
+            // Run when window is resized
+            window.addEventListener('resize', adjustTooltipPosition);
+            
+            // Run when table is scrolled horizontally (for responsive tables)
+            const table = document.querySelector('.pricing-table');
+            if (table) {
+                table.addEventListener('scroll', adjustTooltipPosition);
             }
         });
     </script>
