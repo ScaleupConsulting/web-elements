@@ -932,8 +932,8 @@
                         ),
                         createPlatform(
                             PLATFORM.IOS,
-                            [STATUS.UNAVAILABLE, STATUS.CONSTRUCTION, STATUS.AVAILABLE],
-                            [TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_IOS, TOOLTIP.AVAILABLE_IOS]
+                            [STATUS.CONSTRUCTION, STATUS.CONSTRUCTION, STATUS.CONSTRUCTION],
+                            [TOOLTIP.COMING_SOON_IOS, TOOLTIP.COMING_SOON_IOS, TOOLTIP.COMING_SOON_IOS]
                         ),
                         createPlatform(
                             PLATFORM.WEB,
@@ -952,17 +952,17 @@
                 createFeature(
                     "Push Notifications", 
                     "push",
-                    [AVAILABILITY.NONE, AVAILABILITY.NONE, AVAILABILITY.ALL],
-                    [TOOLTIP.NOT_AVAILABLE, TOOLTIP.NOT_AVAILABLE, TOOLTIP.ALL_PLATFORMS],
+                    [AVAILABILITY.NONE, AVAILABILITY.SOME, AVAILABILITY.ALL],
+                    [TOOLTIP.NOT_AVAILABLE, TOOLTIP.COMING_SOON_ANDROID_IOS, TOOLTIP.ALL_PLATFORMS],
                     [
                         createPlatform(
                             PLATFORM.ANDROID,
-                            [STATUS.UNAVAILABLE, STATUS.LIMITED, STATUS.AVAILABLE],
+                            [STATUS.UNAVAILABLE, STATUS.CONSTRUCTION, STATUS.AVAILABLE],
                             [TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_ANDROID, TOOLTIP.AVAILABLE_ANDROID]
                         ),
                         createPlatform(
                             PLATFORM.IOS,
-                            [STATUS.UNAVAILABLE, STATUS.LIMITED, STATUS.AVAILABLE],
+                            [STATUS.UNAVAILABLE, STATUS.CONSTRUCTION, STATUS.AVAILABLE],
                             [TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_IOS, TOOLTIP.AVAILABLE_IOS]
                         ),
                         createPlatform(
@@ -986,12 +986,12 @@
                     [
                         createPlatform(
                             PLATFORM.ANDROID,
-                            [STATUS.UNAVAILABLE, STATUS.UNAVAILABLE, STATUS.CONSTRUCTION],
-                            [TOOLTIP.UNAVAILABLE, TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_ANDROID]
+                            [STATUS.UNAVAILABLE, STATUS.CONSTRUCTION, STATUS.CONSTRUCTION],
+                            [TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_ANDROID, TOOLTIP.COMING_SOON_ANDROID]
                         ),
                         createPlatform(
                             PLATFORM.IOS,
-                            [STATUS.UNAVAILABLE, STATUS.LIMITED, STATUS.AVAILABLE],
+                            [STATUS.UNAVAILABLE, STATUS.CONSTRUCTION, STATUS.AVAILABLE],
                             [TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_IOS, TOOLTIP.AVAILABLE_IOS]
                         ),
                         createPlatform(
@@ -1016,19 +1016,14 @@
                     [
                         createPlatform(
                             PLATFORM.ANDROID,
-                            [STATUS.UNAVAILABLE, STATUS.UNAVAILABLE, STATUS.AVAILABLE],
-                            [TOOLTIP.UNAVAILABLE, TOOLTIP.UNAVAILABLE, TOOLTIP.AVAILABLE_ANDROID]
+                            [STATUS.UNAVAILABLE, STATUS.CONSTRUCTION, STATUS.AVAILABLE],
+                            [TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_ANDROID, TOOLTIP.AVAILABLE_ANDROID]
                         ),
                         createPlatform(
                             PLATFORM.IOS,
-                            [STATUS.UNAVAILABLE, STATUS.UNAVAILABLE, STATUS.AVAILABLE],
-                            [TOOLTIP.UNAVAILABLE, TOOLTIP.UNAVAILABLE, TOOLTIP.AVAILABLE_IOS]
-                        ),
-                        createPlatform(
-                            PLATFORM.WEB,
                             [STATUS.UNAVAILABLE, STATUS.CONSTRUCTION, STATUS.AVAILABLE],
-                            [TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_WEB, TOOLTIP.AVAILABLE_WEB]
-                        )
+                            [TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_IOS, TOOLTIP.AVAILABLE_IOS]
+                        ),
                     ],
                     [
                         {},
@@ -1096,10 +1091,6 @@
                         { combine: ["Available on Android, iOS and mobile web, coming soon to web"] }
                     ]
                 ),
-                
-                // Geolocation
-                createStaticFeature("Geolocation", TOOLTIP.ALL_PLATFORMS),
-
             ]
         };
 
