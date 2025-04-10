@@ -1012,7 +1012,7 @@
                     "Deep Links",
                     "deep-links",
                     [AVAILABILITY.NONE, AVAILABILITY.SOME, AVAILABILITY.ALL],
-                    [TOOLTIP.NOT_AVAILABLE, null, TOOLTIP.ALL_PLATFORMS],
+                    [TOOLTIP.NOT_AVAILABLE, null, null],
                     [
                         createPlatform(
                             PLATFORM.ANDROID,
@@ -1027,8 +1027,8 @@
                     ],
                     [
                         {},
-                        { combine: [TOOLTIP.COMING_SOON_WEB] },
-                        {}
+                        { combine: [TOOLTIP.COMING_SOON_ANDROID_IOS] },
+                        { combine: [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_IOS] }
                     ]
                 ),
 
