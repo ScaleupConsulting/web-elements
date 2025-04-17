@@ -378,7 +378,7 @@
             background-color: #f8faff;
         }
         
-        /* Add a mobile web icon class */
+        /* Add a Mobile Web icon class */
         .mobile-web-icon:before {
             content: "��";
             font-size: 12px;
@@ -918,11 +918,11 @@
                 createFeature(
                     "Tag Manager",
                     "tag-manager",
-                    [AVAILABILITY.SOME, AVAILABILITY.SOME, AVAILABILITY.ALL],
+                    [AVAILABILITY.SOME, AVAILABILITY.SOME, AVAILABILITY.SOME],
                     [
-                        TOOLTIP.AVAILABLE_ANDROID, 
                         null,  // Will use tooltipConfig for combined tooltip
-                        TOOLTIP.ALL_PLATFORMS
+                        null,  // Will use tooltipConfig for combined tooltip
+                        null,  // Will use tooltipConfig for combined tooltip
                     ],
                     [
                         createPlatform(
@@ -942,9 +942,9 @@
                         )
                     ],
                     [
-                        {},
                         { combine: [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.COMING_SOON_IOS] },
-                        {}
+                        { combine: [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.COMING_SOON_IOS] },
+                        { combine: [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.COMING_SOON_IOS, TOOLTIP.AVAILABLE_WEB] },
                     ]
                 ),
                 
@@ -1086,9 +1086,9 @@
                         )
                     ],
                     [
-                        { combine: ["Available on Android, iOS and mobile web"] },
-                        { combine: ["Available on Android, iOS and mobile web"] },
-                        { combine: ["Available on Android, iOS and mobile web, coming soon to web"] }
+                        { combine: ["Available on Android, iOS and Mobile Web"] },
+                        { combine: ["Available on Android, iOS and Mobile Web"] },
+                        { combine: ["Available on Android, iOS and Mobile Web, coming soon to Web"] }
                     ]
                 ),
             ]
