@@ -899,11 +899,9 @@
                 createStaticFeature("No Setup Fee"),
                 createStaticFeature("No hidden fees or extra charges"),
                 createStaticFeature("Email & Zoom Support"),
-
-                // Move Camera Access here, converted to static feature since all platforms are available
                 createStaticFeature("Camera Access", "Available on Android, iOS and Mobile Web"),
-
                 createStaticFeature("Geolocation", TOOLTIP.ALL_PLATFORMS),
+                createStaticFeature("Storage Access", TOOLTIP.ALL_PLATFORMS),
                 
                 // SECTION: Platform Features
                 // Complex feature with custom tooltips and platform details
@@ -1047,31 +1045,6 @@
                         {},
                         { combine: [TOOLTIP.COMING_SOON_ANDROID_IOS] },
                         { combine: [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_IOS] }
-                    ]
-                ),
-
-                // Storage Access feature
-                createFeature(
-                    "Storage Access",
-                    "storage-access",
-                    [AVAILABILITY.ALL, AVAILABILITY.ALL, AVAILABILITY.ALL],
-                    [TOOLTIP.ALL_PLATFORMS, TOOLTIP.ALL_PLATFORMS, TOOLTIP.ALL_PLATFORMS],
-                    [
-                        createPlatform(
-                            PLATFORM.ANDROID,
-                            [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.AVAILABLE],
-                            [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_ANDROID]
-                        ),
-                        createPlatform(
-                            PLATFORM.IOS,
-                            [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.AVAILABLE],
-                            [TOOLTIP.AVAILABLE_IOS, TOOLTIP.AVAILABLE_IOS, TOOLTIP.AVAILABLE_IOS]
-                        ),
-                        createPlatform(
-                            PLATFORM.WEB,
-                            [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.AVAILABLE],
-                            [TOOLTIP.AVAILABLE_WEB, TOOLTIP.AVAILABLE_WEB, TOOLTIP.AVAILABLE_WEB]
-                        )
                     ]
                 ),
             ]
