@@ -39,10 +39,12 @@
         }
         
         .pricing-header p {
-            font-weight: 400;
-            color: #666;
+            font-weight: 500;
+            color: #333;
+            font-size: 24px;
             max-width: 600px;
             margin: 0 auto;
+            line-height: 1.4;
         }
         
         .pricing-table {
@@ -351,6 +353,10 @@
             .legend-section {
                 width: 100%;
             }
+            
+            .pricing-header p {
+                font-size: 20px;
+            }
         }
         
         /* Add indentation to platform names in details rows */
@@ -618,6 +624,29 @@
                 overflow-x: hidden;
             }
         }
+        
+        /* Override Elementor table styles */
+        .pricing-table,
+        .pricing-table th,
+        .pricing-table td {
+            border: none !important;
+            border-collapse: separate !important;
+        }
+        
+        /* Ensure our custom borders are the only ones showing */
+        .pricing-table td {
+            border-bottom: 1px solid #eee !important;
+        }
+        
+        /* Remove bottom border from last row */
+        .pricing-table tr:last-child td {
+            border-bottom: none !important;
+        }
+        
+        /* Remove any additional Elementor spacing */
+        .elementor-widget-container table {
+            margin: 0 !important;
+        }
     </style>
 </head>
 <body>
@@ -717,8 +746,9 @@
             
             // Special messages
             MOST_UPDATES: "Most updates",
-            MAIN_MOST_UPDATES: "Available on Android, iOS and Web for most updates",
-            SUB_MOST_UPDATES: "Some changes may require a review by the App Store"
+            MOST_UPDATES_ANDROID_IOS: "Some changes may require a review by the App Store and Google Play",
+            SUB_MOST_UPDATES_IOS: "Some changes may require a review by the App Store",
+            SUB_MOST_UPDATES_ANDROID: "Some changes may require a review by the Play Store"
         };
 
         /************************************
@@ -760,19 +790,6 @@
             // Handle combined tooltips
             if (config.combine) {
                 return combineTooltips(baseTooltip, ...config.combine);
-            }
-            
-            // Handle special tooltip cases
-            if (config.mostUpdates) {
-                return TOOLTIP.MOST_UPDATES;
-            }
-            
-            if (config.mainMostUpdates) {
-                return TOOLTIP.MAIN_MOST_UPDATES;
-            }
-            
-            if (config.subMostUpdates) {
-                return TOOLTIP.SUB_MOST_UPDATES;
             }
             
             // Custom text override
@@ -882,7 +899,10 @@
                 createStaticFeature("No Setup Fee"),
                 createStaticFeature("No hidden fees or extra charges"),
                 createStaticFeature("Email & Zoom Support"),
-                createStaticFeature("Instant Updates", TOOLTIP.ALL_PLATFORMS),
+
+                // Move Camera Access here, converted to static feature since all platforms are available
+                createStaticFeature("Camera Access", "Available on Android, iOS and Mobile Web"),
+
                 createStaticFeature("Geolocation", TOOLTIP.ALL_PLATFORMS),
                 
                 // SECTION: Platform Features
@@ -896,20 +916,18 @@
                         createPlatform(
                             PLATFORM.ANDROID,
                             [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.LIMITED],
-                            [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_ANDROID, null],
-                            [{}, {}, { subMostUpdates: true }]
+                            [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.SUB_MOST_UPDATES_ANDROID]
                         ),
                         createPlatform(
                             PLATFORM.IOS,
                             [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.LIMITED],
-                            [TOOLTIP.AVAILABLE_IOS, TOOLTIP.AVAILABLE_IOS, null],
-                            [{}, {}, { subMostUpdates: true }]
+                            [TOOLTIP.AVAILABLE_IOS, TOOLTIP.AVAILABLE_IOS, TOOLTIP.SUB_MOST_UPDATES_IOS]
                         )
                     ],
                     [
                         {},
                         {},
-                        { mainMostUpdates: true }
+                        { combine: [TOOLTIP.MOST_UPDATES_ANDROID_IOS] }
                     ]
                 ),
                 
@@ -918,11 +936,11 @@
                 createFeature(
                     "Tag Manager",
                     "tag-manager",
-                    [AVAILABILITY.SOME, AVAILABILITY.SOME, AVAILABILITY.SOME],
+                    [AVAILABILITY.SOME, AVAILABILITY.SOME, AVAILABILITY.ALL],
                     [
-                        null,  // Will use tooltipConfig for combined tooltip
-                        null,  // Will use tooltipConfig for combined tooltip
-                        null,  // Will use tooltipConfig for combined tooltip
+                        null,
+                        null,
+                        TOOLTIP.ALL_PLATFORMS
                     ],
                     [
                         createPlatform(
@@ -932,8 +950,8 @@
                         ),
                         createPlatform(
                             PLATFORM.IOS,
-                            [STATUS.CONSTRUCTION, STATUS.CONSTRUCTION, STATUS.CONSTRUCTION],
-                            [TOOLTIP.COMING_SOON_IOS, TOOLTIP.COMING_SOON_IOS, TOOLTIP.COMING_SOON_IOS]
+                            [STATUS.CONSTRUCTION, STATUS.CONSTRUCTION, STATUS.AVAILABLE],
+                            [TOOLTIP.COMING_SOON_IOS, TOOLTIP.COMING_SOON_IOS, TOOLTIP.AVAILABLE_IOS]
                         ),
                         createPlatform(
                             PLATFORM.WEB,
@@ -944,7 +962,7 @@
                     [
                         { combine: [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.COMING_SOON_IOS] },
                         { combine: [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.COMING_SOON_IOS] },
-                        { combine: [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.COMING_SOON_IOS, TOOLTIP.AVAILABLE_WEB] },
+                        {}
                     ]
                 ),
                 
@@ -1054,41 +1072,6 @@
                             [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.AVAILABLE],
                             [TOOLTIP.AVAILABLE_WEB, TOOLTIP.AVAILABLE_WEB, TOOLTIP.AVAILABLE_WEB]
                         )
-                    ]
-                ),
-
-                // Camera Access feature
-                createFeature(
-                    "Camera Access",
-                    "camera-access",
-                    [AVAILABILITY.SOME, AVAILABILITY.SOME, AVAILABILITY.SOME],
-                    [null, null, null],
-                    [
-                        createPlatform(
-                            PLATFORM.ANDROID,
-                            [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.AVAILABLE],
-                            [TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_ANDROID, TOOLTIP.AVAILABLE_ANDROID]
-                        ),
-                        createPlatform(
-                            PLATFORM.IOS,
-                            [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.AVAILABLE],
-                            [TOOLTIP.AVAILABLE_IOS, TOOLTIP.AVAILABLE_IOS, TOOLTIP.AVAILABLE_IOS]
-                        ),
-                        createPlatform(
-                            PLATFORM.WEB,
-                            [STATUS.UNAVAILABLE, STATUS.UNAVAILABLE, STATUS.CONSTRUCTION],
-                            [TOOLTIP.UNAVAILABLE, TOOLTIP.UNAVAILABLE, TOOLTIP.COMING_SOON_WEB]
-                        ),
-                        createPlatform(
-                            PLATFORM.MOBILE_WEB,
-                            [STATUS.AVAILABLE, STATUS.AVAILABLE, STATUS.AVAILABLE],
-                            [TOOLTIP.AVAILABLE_MOBILE_WEB, TOOLTIP.AVAILABLE_MOBILE_WEB, TOOLTIP.AVAILABLE_MOBILE_WEB]
-                        )
-                    ],
-                    [
-                        { combine: ["Available on Android, iOS and Mobile Web"] },
-                        { combine: ["Available on Android, iOS and Mobile Web"] },
-                        { combine: ["Available on Android, iOS and Mobile Web, coming soon to Web"] }
                     ]
                 ),
             ]
