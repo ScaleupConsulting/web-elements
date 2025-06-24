@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharemates vs Zapier Comparison</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        .comparison-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: transparent;
+        }
+        
+        .comparison-header {
+            text-align: center;
+            margin-bottom: 40px;
+            background-color: transparent;
+        }
+        
+        .comparison-header h1 {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 32px;
+        }
+        
+        .comparison-header p {
+            font-weight: 500;
+            color: #666;
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.4;
+        }
+        
+        .comparison-table-outer {
+            box-shadow: 0 5px 30px rgba(0,0,0,0.08);
+            border-radius: 12px;
+            background: #fff;
+            overflow: visible;
+            margin: 0 auto;
+            max-width: 100%;
+            padding: 0;
+            /* Responsive scroll */
+            width: 100%;
+        }
+        
+        .comparison-table {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: none;
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            overflow: visible;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 20px 15px;
+            vertical-align: top;
+            border: none !important;
+        }
+        
+        .comparison-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+            font-size: 16px;
+            text-align: center;
+            vertical-align: top;
+            justify-content: center;
+        }
+        
+        .comparison-table th:first-child {
+            text-align: left;
+            padding-left: 25px;
+            padding-top: 25px;
+            justify-content: flex-start;
+        }
+        
+        .comparison-table tr td:first-child {
+            text-align: left;
+            font-weight: 500;
+            color: #333;
+            padding-left: 25px;
+            line-height: 1.4;
+            width: 40%;
+        }
+        
+        .comparison-table tr td:not(:first-child) {
+            text-align: center;
+            vertical-align: middle;
+            width: 20%;
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none !important;
+        }
+        
+        .plan-header {
+            color: #333;
+            font-size: 18px;
+            padding: 25px 15px !important;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: 500;
+        }
+        
+        .feature-row {
+            transition: background-color 0.2s ease;
+        }
+        
+        .feature-row:hover {
+            background-color: #f8faff;
+        }
+        
+        .feature-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .feature-description {
+            font-size: 13px;
+            color: #666;
+            font-weight: 400;
+            line-height: 1.3;
+        }
+        
+        .capability-indicator {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+        }
+        
+        .capability-indicator:hover {
+            transform: scale(1.15);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .capability-available {
+            background-color: #2ecc71;
+        }
+        
+        .capability-unavailable {
+            background-color: #e74c3c;
+        }
+        
+        .capability-limited {
+            background-color: #f39c12;
+        }
+        
+        .mobile-legend {
+            display: none;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 13px;
+            color: #666;
+            padding: 8px;
+            background-color: transparent;
+            border-radius: 6px;
+        }
+        
+        /* Mobile/tablet horizontal scroll */
+        @media (max-width: 1024px) {
+            .comparison-table-outer {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .comparison-table {
+                min-width: 600px;
+            }
+        }
+        
+        /* Mobile scroll hint */
+        .mobile-scroll-hint {
+            display: none;
+            text-align: center;
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+        @media (max-width: 1024px) {
+            .mobile-scroll-hint {
+                display: block;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .comparison-table th, .comparison-table td {
+                padding: 10px 6px;
+                font-size: 13px;
+            }
+            .feature-name {
+                font-size: 13px;
+            }
+            .feature-description {
+                font-size: 11px;
+            }
+            .capability-indicator {
+                width: 22px;
+                height: 22px;
+                font-size: 11px;
+            }
+        }
+        @media (max-width: 480px) {
+            .comparison-table th, .comparison-table td {
+                padding: 8px 4px;
+                font-size: 12px;
+            }
+            .feature-name {
+                font-size: 12px;
+            }
+            .feature-description {
+                font-size: 10px;
+            }
+            .capability-indicator {
+                width: 18px;
+                height: 18px;
+                font-size: 10px;
+            }
+        }
+        
+        /* Tooltip styles */
+        [data-tooltip] {
+            position: relative;
+            cursor: help;
+        }
+        
+        [data-tooltip]::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 9999;
+            pointer-events: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            max-width: 250px;
+            width: max-content;
+            white-space: normal;
+            word-wrap: break-word;
+            text-align: center;
+            line-height: 1.4;
+        }
+        
+        [data-tooltip]:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .comparison-table-outer,
+        .comparison-container {
+            overflow: visible !important;
+            position: relative;
+        }
+        
+        .comparison-table {
+            overflow: visible !important;
+        }
+        
+        /* Ensure body and html don't clip tooltips */
+        body {
+            overflow-x: visible;
+        }
+        
+        /* Add some padding to the container to give tooltips space */
+        .comparison-container {
+            padding: 0 20px;
+        }
+        
+        /* Hide card view by default */
+        .comparison-cards {
+            display: none;
+        }
+        /* Show cards and hide table on mobile */
+        @media (max-width: 768px) {
+            .comparison-table-outer {
+                display: none;
+            }
+            .comparison-cards {
+                display: block;
+            }
+        }
+        .comparison-cards {
+            margin: 0 auto;
+            max-width: 600px;
+        }
+        .comparison-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+            padding: 18px 16px 12px 16px;
+        }
+        .comparison-card .feature-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        .comparison-card .feature-description {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+        .comparison-card-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        .comparison-card-table th, .comparison-card-table td {
+            padding: 8px 6px;
+            font-size: 13px;
+            text-align: left;
+            border: none;
+            vertical-align: middle;
+        }
+        .comparison-card-table th {
+            color: #888;
+            font-weight: 500;
+            width: 70%;
+        }
+        .comparison-card-table td {
+            text-align: right;
+        }
+        .comparison-card .capability-indicator {
+            width: 22px;
+            height: 22px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+        
+        /* Mobile pricing section */
+        .mobile-pricing-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .mobile-pricing-section h3 {
+            color: #333;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .pricing-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .pricing-item {
+            flex: 1;
+            text-align: center;
+        }
+        .pricing-item .service-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .pricing-item .service-price {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+        .pricing-vs {
+            font-size: 14px;
+            color: #888;
+            font-weight: 500;
+            padding: 0 10px;
+        }
+        .latency-value {
+            display: inline-block;
+            font-size: 15px;
+            color: #333;
+            font-weight: 500;
+            text-align: center;
+            background: none;
+            border-radius: 0;
+            padding: 0 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="comparison-container">
+        <div class="comparison-header">
+            <h1>Sharemates vs Zapier</h1>
+            <p>Feature comparison for Sharetribe marketplace automation and management</p>
+        </div>
+        
+        <div class="mobile-legend">
+            Tap on icons for more details • <span style="color: #2ecc71;">✓ Available</span> • <span style="color: #f39c12;">! Limited</span> • <span style="color: #e74c3c;">✗ Not Available</span>
+        </div>
+        
+        <div class="comparison-table-outer">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                         <th class="plan-header">Sharemates<br><span style='font-size:13px;font-weight:400;'>(Starts at $30 USD/mo)</span></th>
+                         <th class="plan-header">Zapier Free</th>
+                         <th class="plan-header">Zapier Professional<br><span style='font-size:13px;font-weight:400;'>($29.99 USD/mo)</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="feature-row">
+                        <td>
+                            <div class="feature-name">Access Control</div>
+                            <div class="feature-description">Allow/Deny/View/Post/Respond by user type + ID verification</div>
+                        </td>
+                         <td>
+                             <div class="capability-indicator capability-available" data-tooltip="Built-in with UI for user types, no code">✓</div>
+                         </td>
+                         <td>
+                             <div class="capability-indicator capability-limited" data-tooltip="Possible to change user types, but ID verification is not included.">!</div>
+                         </td>
+                         <td>
+                             <div class="capability-indicator capability-limited" data-tooltip="Possible to change user types, but ID verification is not included.">!</div>
+                         </td>
+                    </tr>
+                    
+                    <tr class="feature-row">
+                        <td>
+                            <div class="feature-name">Instant Booking Rules</div>
+                            <div class="feature-description">Manual, Auto, or conditional based on user/listing fields</div>
+                        </td>
+                         <td>
+                             <div class="capability-indicator capability-available" data-tooltip="Full logic control via Sharemates UI">✓</div>
+                         </td>
+                         <td>
+                             <div class="capability-indicator capability-available" data-tooltip="Available but requires setup.">✓</div>
+                         </td>
+                         <td>
+                             <div class="capability-indicator capability-available" data-tooltip="Available but requires setup.">✓</div>
+                         </td>
+                    </tr>
+                    
+                    <tr class="feature-row">
+                        <td>
+                            <div class="feature-name">Notification Rules</div>
+                            <div class="feature-description">Per transition in Sharetribe workflow</div>
+                        </td>
+                         <td>
+                             <div class="capability-indicator capability-available" data-tooltip="Granular control with toggles">✓</div>
+                         </td>
+                         <td>
+                             <div class="capability-indicator capability-available" data-tooltip="Available but requires setup.">✓</div>
+                         </td>
+                         <td>
+                             <div class="capability-indicator capability-available" data-tooltip="Available but requires setup.">✓</div>
+                         </td>
+                    </tr>
+                    
+                    <tr class="feature-row">
+                        <td>
+                            <div class="feature-name">Inject JS/Tags into Mobile App</div>
+                            <div class="feature-description">Add tracking, analytics, or custom functionality to mobile apps</div>
+                        </td>
+                         <td>
+                             <div class="capability-indicator capability-available" data-tooltip="Built-in Tag Manager for Scaleup mobile apps">✓</div>
+                         </td>
+                         <td>
+                             <div class="capability-indicator capability-unavailable" data-tooltip="Not possible">✗</div>
+                         </td>
+                         <td>
+                             <div class="capability-indicator capability-unavailable" data-tooltip="Not possible">✗</div>
+                         </td>
+                    </tr>
+                    
+                    <tr class="feature-row">
+                        <td>
+                            <div class="feature-name">Direct Stripe Dashboard Access</div>
+                            <div class="feature-description">Operators can access the Stripe dashboard directly from within Sharemates.</div>
+                        </td>
+                         <td>
+                             <div class="capability-indicator capability-available" data-tooltip="Operators can access the Stripe dashboard directly from within Sharemates.">✓</div>
+                         </td>
+                         <td>
+                             <div class="capability-indicator capability-unavailable" data-tooltip="Zapier cannot provide direct dashboard access.">✗</div>
+                         </td>
+                         <td>
+                             <div class="capability-indicator capability-unavailable" data-tooltip="Zapier cannot provide direct dashboard access.">✗</div>
+                         </td>
+                    </tr>
+                    
+                    <tr class="feature-row">
+                        <td>
+                            <div class="feature-name">Latency</div>
+                            <div class="feature-description">How quickly new events are processed and actions are triggered.</div>
+                        </td>
+                         <td>
+                             <span class="latency-value" data-tooltip="Sharemates processes events every 1 minute (can be made less)">1 min</span>
+                         </td>
+                         <td>
+                             <span class="latency-value" data-tooltip="Zapier Free/Starter processes events approximately every 15 minutes">~15 min</span>
+                         </td>
+                         <td>
+                             <span class="latency-value" data-tooltip="Zapier Professional+ processes events approximately every 2 minutes">~2 min</span>
+                         </td>
+                    </tr>
+                    
+                    <tr class="feature-row">
+                        <td>
+                            <div class="feature-name">HubSpot Integration</div>
+                            <div class="feature-description">Sync user data & transitions seamlessly</div>
+                        </td>
+                         <td>
+                             <div class="capability-indicator capability-available" data-tooltip="Seamless sync with Sharetribe user updates">✓</div>
+                         </td>
+                         <td>
+                             <div class="capability-indicator capability-limited" data-tooltip="Possible, but painful to configure in Zapier's UI.">!</div>
+                         </td>
+                         <td>
+                             <div class="capability-indicator capability-limited" data-tooltip="Possible, but painful to configure in Zapier's UI.">!</div>
+                         </td>
+                    </tr>
+                    
+                    <tr class="feature-row">
+                        <td>
+                            <div class="feature-name">Transactions List View</div>
+                            <div class="feature-description">Full dashboard inside console for operators</div>
+                        </td>
+                         <td>
+                             <div class="capability-indicator capability-available" data-tooltip="Built-in interface for operators">✓</div>
+                         </td>
+                         <td>
+                             <div class="capability-indicator capability-unavailable" data-tooltip="No access to Zapier Interfaces, cannot create custom dashboards.">✗</div>
+                         </td>
+                         <td>
+                             <div class="capability-indicator capability-limited" data-tooltip="With Zapier Interfaces, can create custom UIs to display transaction data, but requires building the interface.">!</div>
+                         </td>
+                    </tr>
+                    
+                    <tr class="feature-row">
+                        <td>
+                            <div class="feature-name">Sharetribe Optimised UI for Operators</div>
+                            <div class="feature-description">Intuitive interface designed for non-technical users</div>
+                        </td>
+                         <td>
+                             <div class="capability-indicator capability-available" data-tooltip="Intuitive interface designed for non-technical users">✓</div>
+                         </td>
+                         <td>
+                             <div class="capability-indicator capability-unavailable" data-tooltip="Zapier does not provide a Sharetribe-optimised UI for operators.">✗</div>
+                         </td>
+                         <td>
+                             <div class="capability-indicator capability-unavailable" data-tooltip="Zapier does not provide a Sharetribe-optimised UI for operators.">✗</div>
+                         </td>
+                    </tr>
+                    
+                    <tr class="feature-row">
+                        <td>
+                            <div class="feature-name">Built for Sharetribe</div>
+                            <div class="feature-description">Native integration and deep understanding of marketplace workflows</div>
+                        </td>
+                         <td>
+                             <div class="capability-indicator capability-available" data-tooltip="100%, deeply integrated">✓</div>
+                         </td>
+                         <td>
+                             <div class="capability-indicator capability-unavailable" data-tooltip="General-purpose automation">✗</div>
+                         </td>
+                         <td>
+                             <div class="capability-indicator capability-unavailable" data-tooltip="General-purpose automation">✗</div>
+                         </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="comparison-cards">
+            <!-- Mobile Pricing Section -->
+            <div class="mobile-pricing-section">
+                <h3>Pricing Comparison</h3>
+                <div class="pricing-row">
+                    <div class="pricing-item">
+                        <div class="service-name">Sharemates</div>
+                        <div class="service-price">Starts at $30 USD/mo</div>
+                    </div>
+                    <div class="pricing-vs">vs</div>
+                    <div class="pricing-item">
+                        <div class="service-name">Zapier Professional</div>
+                        <div class="service-price">$29.99 USD/mo</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Access Control -->
+            <div class="comparison-card">
+                <div class="feature-name">Access Control</div>
+                <div class="feature-description">Allow/Deny/View/Post/Respond by user type + ID verification</div>
+                <table class="comparison-card-table">
+                    <tr><th>Sharemates</th><td><span class="capability-indicator capability-available" data-tooltip="Built-in with UI for user types, no code">✓</span></td></tr>
+                    <tr><th>Zapier Free</th><td><span class="capability-indicator capability-limited" data-tooltip="Possible to change user types, but ID verification is not included.">!</span></td></tr>
+                    <tr><th>Zapier Professional</th><td><span class="capability-indicator capability-limited" data-tooltip="Possible to change user types, but ID verification is not included.">!</span></td></tr>
+                </table>
+            </div>
+            <!-- Instant Booking Rules -->
+            <div class="comparison-card">
+                <div class="feature-name">Instant Booking Rules</div>
+                <div class="feature-description">Manual, Auto, or conditional based on user/listing fields</div>
+                <table class="comparison-card-table">
+                    <tr><th>Sharemates</th><td><span class="capability-indicator capability-available" data-tooltip="Full logic control via Sharemates UI">✓</span></td></tr>
+                    <tr><th>Zapier Free</th><td><span class="capability-indicator capability-available" data-tooltip="Available but requires setup.">✓</span></td></tr>
+                    <tr><th>Zapier Professional</th><td><span class="capability-indicator capability-available" data-tooltip="Available but requires setup.">✓</span></td></tr>
+                </table>
+            </div>
+            <!-- Notification Rules -->
+            <div class="comparison-card">
+                <div class="feature-name">Notification Rules</div>
+                <div class="feature-description">Per transition in Sharetribe workflow</div>
+                <table class="comparison-card-table">
+                    <tr><th>Sharemates</th><td><span class="capability-indicator capability-available" data-tooltip="Granular control with toggles">✓</span></td></tr>
+                    <tr><th>Zapier Free</th><td><span class="capability-indicator capability-available" data-tooltip="Available but requires setup.">✓</span></td></tr>
+                    <tr><th>Zapier Professional</th><td><span class="capability-indicator capability-available" data-tooltip="Available but requires setup.">✓</span></td></tr>
+                </table>
+            </div>
+            <!-- Inject JS/Tags into Mobile App -->
+            <div class="comparison-card">
+                <div class="feature-name">Inject JS/Tags into Mobile App</div>
+                <div class="feature-description">Add tracking, analytics, or custom functionality to mobile apps</div>
+                <table class="comparison-card-table">
+                    <tr><th>Sharemates</th><td><span class="capability-indicator capability-available" data-tooltip="Built-in Tag Manager for Scaleup mobile apps">✓</span></td></tr>
+                    <tr><th>Zapier Free</th><td><span class="capability-indicator capability-unavailable" data-tooltip="Not possible">✗</span></td></tr>
+                    <tr><th>Zapier Professional</th><td><span class="capability-indicator capability-unavailable" data-tooltip="Not possible">✗</span></td></tr>
+                </table>
+            </div>
+            <!-- Stripe Integration -->
+            <div class="comparison-card">
+                <div class="feature-name">Direct Stripe Dashboard Access</div>
+                <div class="feature-description">Operators can access the Stripe dashboard directly from within Sharemates using the Stripe secret key integration. Zapier cannot provide direct dashboard access.</div>
+                <table class="comparison-card-table">
+                    <tr><th>Sharemates</th><td><span class="capability-indicator capability-available" data-tooltip="Operators can access the Stripe dashboard directly from within Sharemates.">✓</span></td></tr>
+                    <tr><th>Zapier Free</th><td><span class="capability-indicator capability-unavailable" data-tooltip="Zapier cannot provide direct dashboard access.">✗</span></td></tr>
+                    <tr><th>Zapier Professional</th><td><span class="capability-indicator capability-unavailable" data-tooltip="Zapier cannot provide direct dashboard access.">✗</span></td></tr>
+                </table>
+            </div>
+            <!-- HubSpot Integration -->
+            <div class="comparison-card">
+                <div class="feature-name">Latency</div>
+                <div class="feature-description">How quickly new events are processed and actions are triggered.</div>
+                <table class="comparison-card-table">
+                    <tr><th>Sharemates</th><td><span class="latency-value" data-tooltip="Sharemates processes events every 1 minute">1 min</span></td></tr>
+                    <tr><th>Zapier Free</th><td><span class="latency-value" data-tooltip="Zapier Free/Starter processes events approximately every 15 minutes">~15 min</span></td></tr>
+                    <tr><th>Zapier Professional</th><td><span class="latency-value" data-tooltip="Zapier Professional+ processes events approximately every 2 minutes">~2 min</span></td></tr>
+                </table>
+            </div>
+            <!-- Transactions List View -->
+            <div class="comparison-card">
+                <div class="feature-name">Transactions List View</div>
+                <div class="feature-description">Full dashboard inside console for operators</div>
+                <table class="comparison-card-table">
+                    <tr><th>Sharemates</th><td><span class="capability-indicator capability-available" data-tooltip="Built-in interface for operators">✓</span></td></tr>
+                    <tr><th>Zapier Free</th><td><span class="capability-indicator capability-unavailable" data-tooltip="No access to Zapier Interfaces, cannot create custom dashboards.">✗</span></td></tr>
+                    <tr><th>Zapier Professional</th><td><span class="capability-indicator capability-limited" data-tooltip="With Zapier Interfaces, can create custom UIs to display transaction data, but requires building the interface.">!</span></td></tr>
+                </table>
+            </div>
+            <!-- No-Code UI for Operators -->
+            <div class="comparison-card">
+                <div class="feature-name">No-Code UI for Operators</div>
+                <div class="feature-description">Intuitive interface designed for non-technical users</div>
+                <table class="comparison-card-table">
+                    <tr><th>Sharemates</th><td><span class="capability-indicator capability-available" data-tooltip="Intuitive interface designed for non-technical users">✓</span></td></tr>
+                    <tr><th>Zapier Free</th><td><span class="capability-indicator capability-unavailable" data-tooltip="Zapier does not provide a Sharetribe-optimised UI for operators.">✗</span></td></tr>
+                    <tr><th>Zapier Professional</th><td><span class="capability-indicator capability-unavailable" data-tooltip="Zapier does not provide a Sharetribe-optimised UI for operators.">✗</span></td></tr>
+                </table>
+            </div>
+            <!-- Built for Sharetribe -->
+            <div class="comparison-card">
+                <div class="feature-name">Built for Sharetribe</div>
+                <div class="feature-description">Native integration and deep understanding of marketplace workflows</div>
+                <table class="comparison-card-table">
+                    <tr><th>Sharemates</th><td><span class="capability-indicator capability-available" data-tooltip="100%, deeply integrated">✓</span></td></tr>
+                    <tr><th>Zapier Free</th><td><span class="capability-indicator capability-unavailable" data-tooltip="General-purpose automation">✗</span></td></tr>
+                    <tr><th>Zapier Professional</th><td><span class="capability-indicator capability-unavailable" data-tooltip="General-purpose automation">✗</span></td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
