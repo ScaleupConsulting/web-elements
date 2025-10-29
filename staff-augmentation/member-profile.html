@@ -90,7 +90,7 @@
         const template_id = "template_gehkc1j";
         const user_id = "AxzgF3774nXj7bELh";
         emailjs
-          .sendForm(service_id, template_id, "#contact-form", user_id)
+          .sendForm(service_id, template_id, e.target, user_id)
           .then(
             function (response) {
               window.open(
